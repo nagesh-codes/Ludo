@@ -1,5 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Permanent+Marker&display=swap');
 
+:root {
+  --first-color: #42a5f5;
+  --second-color: #7e57c2;
+  --first-g-color: #09b5ee;
+  --second-g-color: #7357ff;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -15,8 +22,10 @@ body {
   display: flex;
   flex-direction: column;
   scroll-behavior: smooth;
+  height: 100dvh;
+  width: 100vw;
 }
 
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
   display: none;
-}
+} */

@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Enter_lobby from './pages/Enter_lobby';
 import './App.css'
+import Home from './pages/Home';
 
 function App() {
 
@@ -8,7 +8,7 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path={"/"} element={<Enter_lobby />}></Route>
+          <Route path={"/"} element={<Home />}></Route>
         </Routes>
       </BrowserRouter>
     </>
