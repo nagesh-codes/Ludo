@@ -6,57 +6,84 @@
     justify-content: center;
     overflow: hidden;
     background: linear-gradient(135deg, #1ec4d9, #7c5eff);
+    position: relative;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    animation: fadeInBg 1.5s ease forwards;
+    user-select: none;
 }
 
 .home-container .wrapper {
-    padding: 20px;
+    padding: 30px 40px;
     height: 500px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(15px) saturate(150%);
     background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
     color: #fff;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     border-radius: 30px;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: slideUp 1.2s ease forwards 0.3s;
 }
 
 .home-container .first {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    opacity: 0;
+    animation: fadeIn 1s ease forwards 0.8s;
 }
 
 .home-container .first .lft img {
     height: 70px;
     padding: 0;
+    transition: transform 0.3s ease;
+    transition: transform 0.3s ease-in-out;
 }
 
+.home-container .first .lft img:hover {
+    transform: rotate(-10deg) scale(1.05);
+}
 
 .home-container .first .rht {
     display: flex;
     gap: 20px;
 }
 
+.home-container .first .rht a {
+    text-decoration: none;
+    color: #fff;
+}
+
 .home-container .first .rht span {
     transition: all 0.4s ease-in-out;
     cursor: pointer;
+    font-weight: bolder;
 }
 
 .home-container .first .rht span:hover {
     text-decoration: underline;
 }
 
-
 .home-container .second {
     margin-left: 22%;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 15px;
+    opacity: 0;
+    animation: fadeIn 1s ease forwards 1.2s;
 }
 
 .home-container .second h1 {
     font-size: 3.7rem;
+    font-weight: 700;
+    line-height: 1.2;
+    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    transform: scale(0.95);
+    animation: scaleUp 1.2s ease forwards 1.4s;
 }
 
 .home-container .third {
@@ -66,22 +93,34 @@
 .home-container .first,
 .home-container .second,
 .home-container .third {
-    z-index: 10;
+    z-index: 100;
 }
+
 
 .home-container .dice-img {
     position: absolute;
     top: 40%;
     left: -8%;
+    opacity: 0;
+    transform: translateX(-50px) rotate(-10deg);
+    animation: diceIn 1.3s ease forwards 1s;
 }
 
 .home-container .dice-img img {
     height: 350px;
+    filter: drop-shadow(0 8px 15px rgba(0, 0, 0, 0.4));
+    transition: filter 0.3s ease-in-out;
+}
+
+.home-container .dice-img img:hover {
+    filter: drop-shadow(0 8px 15px rgba(0, 0, 0, 1));
 }
 
 .home-container .second .btns {
     display: flex;
-    gap: 10px;
+    gap: 15px;
+    opacity: 0;
+    animation: fadeIn 1s ease forwards 1.8s;
 }
 
 .home-container .second .btns button {
@@ -113,41 +152,223 @@
     transform: translateY(-5px);
 }
 
-.home-container .red {
+.home-container .red,
+.home-container .green,
+.home-container .yellow,
+.home-container .blue {
     position: absolute;
-    height: 180px;
     background-color: transparent;
     filter: drop-shadow(0 0 5px);
+    opacity: 0;
+    transform: scale(0.7);
+    transition: transform 0.3s ease;
+    transition: filter 0.3s ease;
+    animation: pawnIn 1s ease forwards;
+}
+
+.home-container .red {
+    height: 180px;
     top: 70%;
     left: -22%;
     rotate: -20deg;
+    animation-delay: 1.4s;
 }
 
+
 .home-container .green {
-    position: absolute;
     height: 150px;
-    background-color: transparent;
-    filter: drop-shadow(0 0 5px #fff);
     top: 20%;
     left: 11%;
     rotate: -20deg;
+    filter: drop-shadow(0 0 5px #fff);
+    animation-delay: 1.6s;
 }
 
 .home-container .yellow {
-    position: absolute;
     height: 180px;
-    background-color: transparent;
-    filter: drop-shadow(0 0 5px);
     top: 20%;
     left: 80%;
+    animation-delay: 1.8s;
 }
 
 .home-container .blue {
-    position: absolute;
     height: 180px;
-    background-color: transparent;
-    filter: drop-shadow(0 0 5px);
     top: 70%;
     left: 70%;
     rotate: 20deg;
+    animation-delay: 2s;
+}
+
+.home-container .red:hover {
+    filter: drop-shadow(0 0 10px);
+
+}
+
+.home-container .green:hover {
+    filter: drop-shadow(0 0 10px);
+}
+
+.home-container .yellow:hover {
+    filter: drop-shadow(0 0 10px);
+}
+
+.home-container .blue:hover {
+    filter: drop-shadow(0 0 10px);
+}
+
+@keyframes fadeInBg {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes scaleUp {
+    from {
+        transform: scale(0.95);
+    }
+
+    to {
+        transform: scale(1);
+    }
+}
+
+@keyframes diceIn {
+    from {
+        opacity: 0;
+        transform: translateX(-50px) rotate(-10deg);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0) rotate(0deg);
+    }
+}
+
+@keyframes pawnIn {
+    from {
+        opacity: 0;
+        transform: scale(0.7);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@media (max-width: 1024px) {
+    .home-container .second h1 {
+        font-size: 3rem;
+    }
+
+    .home-container .dice-img img {
+        height: 280px;
+    }
+
+    .home-container .wrapper {
+        padding: 20px 30px;
+    }
+}
+
+@media (max-width: 768px) {
+    .home-container .second {
+        margin-left: 10%;
+        text-align: center;
+    }
+
+    .home-container .second h1 {
+        font-size: 2.5rem;
+    }
+
+    .home-container .dice-img {
+        top: 35%;
+        left: -10%;
+    }
+
+    .home-container .dice-img img {
+        height: 220px;
+    }
+
+    .home-container .red,
+    .home-container .green,
+    .home-container .yellow,
+    .home-container .blue {
+        height: 120px;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .home-container .second h1 {
+        text-align: left;
+    }
+
+    .home-container .dice-img {
+        top: 30%;
+        left: 40%;
+    }
+
+    .home-container .red {
+        top: auto;
+        bottom: 0;
+        left: 0;
+        right: auto;
+        rotate: 0deg;
+        height: 90px;
+        rotate: -15deg;
+    }
+
+    .home-container .green {
+        top: 0;
+        left: 0;
+        bottom: auto;
+        right: auto;
+        rotate: 0deg;
+        height: 90px;
+    }
+
+    .home-container .yellow {
+        top: 0;
+        right: 0;
+        bottom: auto;
+        left: auto;
+        rotate: 0deg;
+        height: 90px;
+    }
+
+    .home-container .blue {
+        bottom: 0;
+        right: 0;
+        top: auto;
+        left: auto;
+        rotate: 0deg;
+        height: 90px;
+        rotate: 15deg;
+    }
 }

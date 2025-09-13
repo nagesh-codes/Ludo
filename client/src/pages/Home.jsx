@@ -15,12 +15,12 @@ const Home = () => {
                 <div className="wrapper">
                     <div className="first">
                         <div className="lft">
-                            <img src={logo} alt="logo" />
+                            <img src={logo} alt="logo" draggable="false" />
                         </div>
                         <div className="rht">
                             <span>How To Play</span>
-                            <span>About Creator</span>
-                            <span>GitHub</span>
+                            <span><a href="https://nageshdev.online" target='_blank'>About Creator</a></span>
+                            <span><a href="https://github.com/nagesh-codes/Ludo" target='_blank'>GitHub</a></span>
                         </div>
                     </div>
                     <div className="second">
@@ -35,12 +35,12 @@ const Home = () => {
                         2025 Ludo | credits
                     </div>
                     <div className="dice-img">
-                        <img src={dice} alt="dice image" />
+                        <img src={dice} alt="dice image" draggable="false" />
                     </div>
-                    <img src={red_pawn} alt="red pawn image" className="red" />
-                    <img src={green_pawn} alt="green pawn image" className="green" />
-                    <img src={yellow_pawn} alt="yellow pawn image" className="yellow" />
-                    <img src={blue_pawn} alt="blue pawn image" className="blue" />
+                    <img src={red_pawn} alt="red pawn image" className="red" draggable="false" />
+                    <img src={green_pawn} alt="green pawn image" className="green" draggable="false" />
+                    <img src={yellow_pawn} alt="yellow pawn image" className="yellow" draggable="false" />
+                    <img src={blue_pawn} alt="blue pawn image" className="blue" draggable="false" />
                 </div>
             </div>
         </>
