@@ -26,6 +26,6 @@ body {
   width: 100vw;
 }
 
-/* ::-webkit-scrollbar {
+::-webkit-scrollbar {
   display: none;
-} */
+}
