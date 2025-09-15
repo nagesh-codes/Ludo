@@ -5,13 +5,13 @@ import yellow_pawn from '../assets/yellow-pawn.png'
 import green_pawn from '../assets/green-pawn.png'
 import blue_pawn from '../assets/blue-pawn.png'
 import logo from '../assets/logo1.png'
-
 import '../css-files/Home.css'
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 const Home = () => {
+    const navigate = useNavigate();
+
     return (
-        <>
             <div className="home-container">
                 <div className="wrapper">
                     <div className="first">
@@ -28,8 +28,8 @@ const Home = () => {
                         <h1>Play Ludo with <span>Friends Anywhere!</span></h1>
                         <b>Real-time multiplayer fun. No downloads required</b>
                         <div className="btns">
-                            <button className='create-btn'><Link to={"/create-room"}>Create Lobby</Link></button>
-                            <button className='join-btn'>Join Lobby</button>
+                            <button className='create-btn' onClick={() => navigate("/create-room")}>Create Lobby</button>
+                            <button className='join-btn' onClick={() => navigate("/join-room")}>Join Lobby</button>
                         </div>
                     </div>
                     <div className="third">
@@ -44,7 +44,6 @@ const Home = () => {
                     <img src={blue_pawn} alt="blue pawn image" className="blue" draggable="false" />
                 </div>
             </div>
-        </>
     )
 }
 
