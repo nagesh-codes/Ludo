@@ -7,6 +7,7 @@ import blue_pawn from '../assets/blue-pawn.png'
 import logo from '../assets/logo1.png'
 
 import '../css-files/Home.css'
+import { Link } from 'react-router-dom'
 
 const Home = () => {
     return (
@@ -27,7 +28,7 @@ const Home = () => {
                         <h1>Play Ludo with <span>Friends Anywhere!</span></h1>
                         <b>Real-time multiplayer fun. No downloads required</b>
                         <div className="btns">
-                            <button className='create-btn'>Create Lobby</button>
+                            <button className='create-btn'><Link to={"/create-room"}>Create Lobby</Link></button>
                             <button className='join-btn'>Join Lobby</button>
                         </div>
                     </div>

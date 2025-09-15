@@ -123,6 +123,11 @@
     animation: fadeIn 1s ease forwards 1.8s;
 }
 
+.home-container .second .btns a {
+    text-decoration: none;
+    color: #fff;
+}
+
 .home-container .second .btns button {
     padding: 10px 15px;
     border-radius: 10px;
@@ -132,6 +137,7 @@
     font-weight: bolder;
     border: 1px solid rgba(255, 255, 255, 0.2);
     transition: all 0.3s ease-in-out;
+    cursor: pointer;
 }
 
 .home-container .second .btns .create-btn {
@@ -324,6 +330,10 @@
 }
 
 @media (max-width: 480px) {
+    .home-container .wrapper {
+        padding: 30px 20px;
+        max-width: 90%;
+    }
 
     .home-container .second h1 {
         text-align: left;
