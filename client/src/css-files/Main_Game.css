@@ -74,29 +74,123 @@
 }
 
 .game-container .left .board {
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    border-radius: 10px;
+    border: 2px solid rgba(255, 255, 255, 0.25);
+    border-radius: 20px;
     display: grid;
-    grid-template-columns: repeat(15, 1fr);
-    grid-template-rows: repeat(15, 1fr);
+    grid-template-columns: repeat(13, 1fr);
+    grid-template-rows: repeat(13, 1fr);
+    padding: 20px;
+    box-shadow: inset 0 0 60px #fff;
 }
 
 .game-container .board .inner-board-div {
-    border: 1px solid rgba(255, 255, 255, 0.25);
+    /* border: 1px solid rgba(255, 255, 255, 0.25); */
+    /* background-color: #8aa8e0c5; */
     height: 30px;
     aspect-ratio: 1;
-    /* background-color: red; */
     position: relative;
 }
 
-.game-container .inner-board-div::after{
+.game-container .inner-board-div::after {
     content: '';
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%,-50%);
-    background-color: green;
-    height: 100%;
+    transform: translate(-50%, -50%);
+    background-color: #b3ccfcc9;
+    /* box-shadow: inset 0 0 5px #fff; */
+    border-radius: 7px;
+    height: 96%;
     aspect-ratio: 1;
     z-index: 3;
+}
+
+.red-path::after {
+    box-shadow: inset 0 0 10px #df4439;
+}
+
+.green-path::after {
+    box-shadow: inset 0 0 10px green;
+}
+
+.yellow-path::after {
+    box-shadow: inset 0 0 10px yellow;
+}
+
+.blue-path::after {
+    box-shadow: inset 0 0 10px blue;
+}
+
+.game-container .player-area {
+    z-index: 12;
+    padding: 8px;
+}
+
+.game-container .player {
+    padding: 10px;
+    border-radius: 20px;
+    height: 100%;
+    border: 2px solid rgba(255, 255, 255, 0.25);
+    width: 100%;
+    box-shadow: inset 0 0 10px #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.game-container .player .player-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    font-weight: bolder;
+}
+
+.game-container .player .all-pawns {
+    height: 100%;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    justify-items: center;
+    align-items: center;
+}
+
+.game-container .all-pawns .pawn {
+    border-radius: 50%;
+    height: 28px;
+    aspect-ratio: 1;
+    background-color: cyan;
+}
+
+.game-container .red-player {
+    /* background-color: rgb(161, 51, 51); */
+    grid-row-start: 1;
+    grid-column-start: 1;
+    grid-row-end: 6;
+    grid-column-end: 6;
+}
+
+.game-container .green-player {
+    /* background-color: green; */
+    grid-row-start: 1;
+    grid-column-start: 9;
+    grid-row-end: 6;
+    grid-column-end: 14;
+}
+
+.game-container .yellow-player {
+    /* background-color: yellow; */
+    grid-row-start: 9;
+    grid-column-start: 9;
+    grid-row-end: 14;
+    grid-column-end: 14;
+}
+
+.game-container .blue-player {
+    /* background-color: blue; */
+    grid-row-start: 9;
+    grid-column-start: 1;
+    grid-row-end: 14;
+    grid-column-end: 6;
 }
