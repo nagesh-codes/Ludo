@@ -6,7 +6,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, #1ec4d9, #7c5eff);
+    /* background: linear-gradient(135deg, #1ec4d9, #7c5eff); */
 }
 
 .loading-container .loading-txt {

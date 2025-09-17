@@ -3,13 +3,13 @@
   align-items: center;
   justify-content: center;
   min-height: 100dvh;
-  background: linear-gradient(135deg, #1ec4d9, #7c5eff);
+  /* background: linear-gradient(135deg, #1ec4d9, #7c5eff); */
   color: #fff;
 }
 
 .create-container .wrapper {
   border: 1px solid rgba(255, 255, 255, 0.25);
-  backdrop-filter: blur(15px) saturate(150%);
+  backdrop-filter: blur(3px) saturate(150%);
   background: rgba(255, 255, 255, 0.08);
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
   border-radius: 20px;

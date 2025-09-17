@@ -1,0 +1,102 @@
+.game-container {
+    height: 100dvh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: linear-gradient(135deg, #1ec4d9, #7c5eff);
+    position: relative;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    animation: fadeInBg 1.5s ease forwards;
+    user-select: none;
+}
+
+.game-container .wrapper {
+    padding: 30px 40px;
+    /* height: 500px; */
+    width: 90%;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(15px) saturate(150%);
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: space-between; */
+    border-radius: 30px;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: slideUp 1.2s ease forwards 0.3s;
+}
+
+.game-container .main-heading {
+    font-size: clamp(1.8rem, 5vw, 2.5rem);
+    text-align: center;
+    font-weight: bold;
+    letter-spacing: 1px;
+    animation: textGlow 2.5s ease-in-out infinite alternate;
+    margin-bottom: 20px;
+}
+
+
+.game-container .middle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    justify-content: center;
+}
+
+.game-container .left,
+.game-container .right {
+    width: 100%;
+}
+
+.game-container .left {
+    display: flex;
+    flex-direction: column;
+    font-size: 1rem;
+    /* line-height: 1.6; */
+    opacity: 0.9;
+    animation: slideInLeft 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+    padding: 10px;
+    align-items: center;
+}
+
+.game-container .right {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: space-around;
+    gap: 20px;
+    animation: slideInRight 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+.game-container .left .board {
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 10px;
+    display: grid;
+    grid-template-columns: repeat(15, 1fr);
+    grid-template-rows: repeat(15, 1fr);
+}
+
+.game-container .board .inner-board-div {
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    height: 30px;
+    aspect-ratio: 1;
+    /* background-color: red; */
+    position: relative;
+}
+
+.game-container .inner-board-div::after{
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background-color: green;
+    height: 100%;
+    aspect-ratio: 1;
+    z-index: 3;
+}
