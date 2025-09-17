@@ -29,3 +29,7 @@ body {
 ::-webkit-scrollbar {
   display: none;
 }
+
+.hide{
+  display: none;
+}

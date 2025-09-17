@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import playing_ludo from '../assets/playing-ludo.png'
 import '../css-files/Create_Room.css'
 
 const Create_Room = () => {

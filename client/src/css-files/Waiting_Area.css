@@ -1,0 +1,109 @@
+.waiting-container {
+    height: 100dvh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: linear-gradient(135deg, #1ec4d9, #7c5eff);
+    position: relative;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    animation: fadeInBg 1.5s ease forwards;
+    user-select: none;
+}
+
+.waiting-container .wrapper {
+    width: 75%;
+    padding: 30px 40px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(15px) saturate(150%);
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 30px;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: slideUp 1.2s ease forwards 0.3s;
+}
+
+.waiting-container .heading {
+    font-size: clamp(1.8rem, 5vw, 2.5rem);
+    text-align: center;
+    font-weight: bold;
+    letter-spacing: 1px;
+    animation: textGlow 2.5s ease-in-out infinite alternate;
+    margin-bottom: 20px;
+}
+
+.waiting-container .middle {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+}
+
+.waiting-container .left,
+.waiting-container .right {
+    display: flex;
+    align-items: center;
+    width: 50%;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.waiting-container .left{
+}
+
+.waiting-container .player-status {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.waiting-container .player-status .pla {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 20px;
+    background-color: #b3cdfc;
+}
+
+.waiting-container .player-status .pla .ready,
+.waiting-container .player-status .pla .not-ready {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    gap: 20px;
+    color: black;
+    padding: 14px 18px;
+    font-weight: bolder;
+}
+
+.waiting-container .player-status .pla .ready .pl-st {
+    display: flex;
+    flex-direction: column;
+}
+
+.waiting-container .player-status .pla .ready .pl-st span:first-child {
+    font-size: 1.3rem;
+}
+
+.waiting-container .player-status .pla .ready .pl-st span:last-child {
+    font-size: 0.8rem;
+}
+
+.waiting-container .player-status .pla .avt {
+    font-size: 40px;
+    box-shadow: 0px 0px 1px #fff;
+}
+
+.waiting-container .player-status .pla .not-ready .inner {
+    text-align: center;
+    border: 2px dashed;
+    border-radius: 20px;
+    padding: 10px;
+}
