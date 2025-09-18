@@ -23,7 +23,7 @@ function App() {
 
   return (
     <>
-      {/* <div id="particles-js"></div> */}
+      <div id="particles-js"></div>
       <BrowserRouter>
         <Routes>
           <Route path={"/"} element={<Home />}></Route>
