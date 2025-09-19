@@ -5,7 +5,7 @@
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    /* background: linear-gradient(135deg, #1ec4d9, #7c5eff); */
+    background: linear-gradient(135deg, #1ec4d9, #7c5eff);
     position: relative;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     animation: fadeInBg 1.5s ease forwards;

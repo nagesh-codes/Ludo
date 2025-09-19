@@ -11,19 +11,15 @@ import { useEffect } from 'react';
 
 function App() {
   useEffect(() => {
-    /* Make sure particlesJS is available globally */
     window.particlesJS.load(
       "particles-js",
-      "/particles.json", // Path to your config file
-      function () {
-        console.log("Particles.js loaded!");
-      }
+      "/particles.json",
     );
   }, []);
 
   return (
     <>
-      <div id="particles-js"></div>
+      {/* <div id="particles-js"></div> */}
       <BrowserRouter>
         <Routes>
           <Route path={"/"} element={<Home />}></Route>

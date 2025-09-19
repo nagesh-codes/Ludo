@@ -3,23 +3,23 @@ import '../css-files/Main_Game.css'
 
 const Main_Game = () => {
   const redPath = [[8, 1], [8, 2], [8, 3], [8, 4], [8, 5], [8, 6], [8, 7]];
-  const pathCoordinates = [[1, 7], [2, 7], [3, 7]];
   const pawn = [1, 2, 3, 4];
   const [playersDivInfo, setPlayersDivInfo] = useState(['red', 'green', 'yellow', 'blue']);
   const [playersName, setPlayersName] = useState(['play Nagesh', 'player 2', 'player 3', 'player 4']);
+  const [howMuchPlayer, setHowMuchPlayer] = useState(['red', 'green', 'blue', 'yellow'])
 
   useEffect(() => {
     let i = 0;
-    trav(i);
+    // trav(i);
 
     function trav(i) {
-      document.querySelector(".green-player .pawn1").style.gridColumnStart = redPath[i][1];
-      document.querySelector(".green-player .pawn1").style.gridRowStart = redPath[i][0];
+      document.querySelector(".red-pawn-1").style.gridColumnStart = redPath[i][1];
+      document.querySelector(".red-pawn-1").style.gridRowStart = redPath[i][0];
       i++;
       if (i < redPath.length) {
-        // setTimeout(() => {
-        //   trav(i);
-        // }, 1000)
+        setTimeout(() => {
+          trav(i);
+        }, 1000)
       }
     }
   }, []);
@@ -31,30 +31,145 @@ const Main_Game = () => {
         <div className="middle">
           <div className="left">
             <div className="board">
-              {addDivs(pathCoordinates)}
+              {addDivs()}
               {playersDivInfo.map((pla, ind) => {
                 return (
                   <div className={`${pla}-player player-area`} key={ind}>
-                    <div className="player">
-                      <div className="player-info">
-                        <div className="dice-area">🎲</div>
-                        <div className="player-name">{playersName[ind]}</div>
-                      </div>
-                      <div className="all-pawns">
-                        {pawn.map((i) => {
-                          return (
-                            <div className={`pawn${i} pawn`} key={i}></div>
-                          )
-                        })}
-                      </div>
+                    <div className="player-info">
+                      <div className="dice-area">🎲</div>
+                      <div className="player-name">{playersName[ind]}</div>
                     </div>
                   </div>
                 )
               })}
+              {addPawns(howMuchPlayer)}
             </div>
           </div>
           <div className="right">
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Labore in, molestiae assumenda incidunt officiis, obcaecati ipsam soluta magni, dolores quod nobis aliquam sint quis amet. Necessitatibus minima distinctio unde omnis.
+            <div className="chat-container">
+              <div className="chat-area">
+                <div className="lft-txt">
+                  <h3>Nagesh</h3>
+                  <p>hello akjsdhf ajsd fhalksjd fhalsdjf halskjd fhalskdjf halskdjf hlsakjd fhalsjdf h</p>
+                </div>
+
+                <div className="rght-txt">
+                  <h3>you</h3>
+                  <p>hello akjsdhf ajsd fhalksjd fhalsdjf halskjd fhalskdjf halskdjf hlsakjd fhalsjdf h</p>
+                </div>
+                <div className="rght-txt">
+                  <h3>you</h3>
+                  <p>hello akjsdhf ajsd fhalksjd fhalsdjf halskjd fhalskdjf halskdjf hlsakjd fhalsjdf h</p>
+                </div>
+
+                <div className="lft-txt">
+                  <h3>Nagesh</h3>
+                  <p>hello akjsdhf ajsd fhalksjd fhalsdjf halskjd fhalskdjf halskdjf hlsakjd fhalsjdf h</p>
+                </div>
+                <div className="rght-txt">
+                  <h3>you</h3>
+                  <p>hello akjsdhf ajsd fhalksjd fhalsdjf halskjd fhalskdjf halskdjf hlsakjd fhalsjdf h</p>
+                </div>
+                
+
+                <div className="lft-txt">
+                  <h3>Nagesh</h3>
+                  <p>hello akjsdhf ajsd fhalksjd fhalsdjf halskjd fhalskdjf halskdjf hlsakjd fhalsjdf h</p>
+                </div>
+                <div className="rght-txt">
+                  <h3>you</h3>
+                  <p>hello akjsdhf ajsd fhalksjd fhalsdjf halskjd fhalskdjf halskdjf hlsakjd fhalsjdf h</p>
+                </div>
+
+                <div className="lft-txt">
+                  <h3>Nagesh</h3>
+                  <p>hello akjsdhf ajsd fhalksjd fhalsdjf halskjd fhalskdjf halskdjf hlsakjd fhalsjdf h</p>
+                </div>
+                <div className="rght-txt">
+                  <h3>you</h3>
+                  <p>hello akjsdhf ajsd fhalksjd fhalsdjf halskjd fhalskdjf halskdjf hlsakjd fhalsjdf h</p>
+                </div>
+
+                <div className="lft-txt">
+                  <h3>Nagesh</h3>
+                  <p>hello akjsdhf ajsd fhalksjd fhalsdjf halskjd fhalskdjf halskdjf hlsakjd fhalsjdf h</p>
+                </div>
+                <div className="rght-txt">
+                  <h3>you</h3>
+                  <p>hello akjsdhf ajsd fhalksjd fhalsdjf halskjd fhalskdjf halskdjf hlsakjd fhalsjdf h</p>
+                </div>
+
+                <div className="lft-txt">
+                  <h3>Nagesh</h3>
+                  <p>hello akjsdhf ajsd fhalksjd fhalsdjf halskjd fhalskdjf halskdjf hlsakjd fhalsjdf h</p>
+                </div>
+                <div className="rght-txt">
+                  <h3>you</h3>
+                  <p>hello akjsdhf ajsd fhalksjd fhalsdjf halskjd fhalskdjf halskdjf hlsakjd fhalsjdf h</p>
+                </div>
+
+                <div className="lft-txt">
+                  <h3>Nagesh</h3>
+                  <p>hello akjsdhf ajsd fhalksjd fhalsdjf halskjd fhalskdjf halskdjf hlsakjd fhalsjdf h</p>
+                </div>
+                <div className="rght-txt">
+                  <h3>you</h3>
+                  <p>hello akjsdhf ajsd fhalksjd fhalsdjf halskjd fhalskdjf halskdjf hlsakjd fhalsjdf h</p>
+                </div>
+
+                <div className="lft-txt">
+                  <h3>Nagesh</h3>
+                  <p>hello akjsdhf ajsd fhalksjd fhalsdjf halskjd fhalskdjf halskdjf hlsakjd fhalsjdf h</p>
+                </div>
+                <div className="rght-txt">
+                  <h3>you</h3>
+                  <p>hello akjsdhf ajsd fhalksjd fhalsdjf halskjd fhalskdjf halskdjf hlsakjd fhalsjdf h</p>
+                </div>
+
+                <div className="lft-txt">
+                  <h3>Nagesh</h3>
+                  <p>hello akjsdhf ajsd fhalksjd fhalsdjf halskjd fhalskdjf halskdjf hlsakjd fhalsjdf h</p>
+                </div>
+                <div className="rght-txt">
+                  <h3>you</h3>
+                  <p>hello akjsdhf ajsd fhalksjd fhalsdjf halskjd fhalskdjf halskdjf hlsakjd fhalsjdf h</p>
+                </div>
+
+                <div className="lft-txt">
+                  <h3>Nagesh</h3>
+                  <p>hello akjsdhf ajsd fhalksjd fhalsdjf halskjd fhalskdjf halskdjf hlsakjd fhalsjdf h</p>
+                </div>
+                <div className="rght-txt">
+                  <h3>you</h3>
+                  <p>hello akjsdhf ajsd fhalksjd fhalsdjf halskjd fhalskdjf halskdjf hlsakjd fhalsjdf h</p>
+                </div>
+
+                <div className="lft-txt">
+                  <h3>Nagesh</h3>
+                  <p>hello akjsdhf ajsd fhalksjd fhalsdjf halskjd fhalskdjf halskdjf hlsakjd fhalsjdf h</p>
+                </div>
+                <div className="rght-txt">
+                  <h3>you</h3>
+                  <p>hello akjsdhf ajsd fhalksjd fhalsdjf halskjd fhalskdjf halskdjf hlsakjd fhalsjdf h</p>
+                </div>
+
+                <div className="lft-txt">
+                  <h3>Nagesh</h3>
+                  <p>hello akjsdhf ajsd fhalksjd fhalsdjf halskjd fhalskdjf halskdjf hlsakjd fhalsjdf h</p>
+                </div>
+                <div className="rght-txt">
+                  <h3>you</h3>
+                  <p>hello akjsdhf ajsd fhalksjd fhalsdjf halskjd fhalskdjf halskdjf hlsakjd fhalsjdf h</p>
+                </div>
+
+              </div>
+              <div className="input-area">
+                <input type="text" placeholder='Message' />
+                <div className="send-btn">
+                  <i className="fa-solid fa-paper-plane"></i>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -62,7 +177,7 @@ const Main_Game = () => {
   )
 }
 
-function addDivs(pathCoordinates) {
+function addDivs() {
   const divs = [];
   let ind = 0;
   for (let i = 1; i <= 15; i++) {
@@ -95,4 +210,15 @@ function addDivs(pathCoordinates) {
   return divs;
 }
 
+function addPawns(howMuchPlayer) {
+  const pawns = []
+  howMuchPlayer.forEach(clr => {
+    for (let j = 0; j < 4; j++) {
+      pawns.push(
+        <div key={`${clr} + ${j}`} className={`${clr}-pawn ${clr}-pawn-${j + 1} pawns`}></div>
+      )
+    }
+  });
+  return pawns;
+}
 export default Main_Game

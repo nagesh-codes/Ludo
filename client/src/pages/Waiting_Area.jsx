@@ -4,14 +4,15 @@ import QRCode from 'qrcode';
 import '../css-files/Waiting_Area.css';
 
 const Waiting_Area = () => {
-  const maxplayer = sessionStorage.getItem('maxPlayer') || 4
+  const maxplayer = sessionStorage.getItem('maxPlayer') || 3
   const [pla_name, setPla_name] = useState(['Nagesh Gh', 'mahesh c']);
 
   useEffect(() => {
+
     for (let i = 0; i < maxplayer - 1; i++) {
       pla_name.push(NaN);
     }
-    // pla_name.
+
     QRCode.toCanvas(document.getElementById("canvas"), window.location.origin, {
       width: window.innerWidth < 600 ? 180 : 330,
       color: {
