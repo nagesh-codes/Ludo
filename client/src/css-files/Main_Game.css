@@ -432,3 +432,83 @@
     background: rgba(255, 255, 255, 0.3);
     border-radius: 3px;
 }
+
+
+
+
+.hide{
+    display: none;
+}
+
+
+
+
+
+/* 📱 Responsive adjustments for smaller screens */
+@media (max-width: 768px) {
+  /* Hide the right panel on small devices */
+  .game-container .right {
+    display: none;
+  }
+
+  /* Stack the middle section vertically */
+  .game-container .middle {
+    flex-direction: column;
+    gap: 15px;
+    padding: 5px;
+  }
+
+  /* Reduce padding and shadow for smaller viewports */
+  .game-container .left .board {
+    padding: 10px;
+    box-shadow: inset 0 0 30px #fff;
+  }
+
+  /* Adjust main heading for smaller screens */
+  .game-container .main-heading {
+    font-size: clamp(1.5rem, 6vw, 2rem);
+    letter-spacing: 1px;
+    margin: 8px 0 4px 0;
+  }
+
+  /* Make chat container fit smaller screens */
+  .chat-container {
+    width: 100%;
+    height: auto;
+    padding: 10px;
+    border-radius: 15px;
+  }
+
+  .chat-container .input-area {
+    grid-template-columns: 1fr 40px;
+    gap: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Further scaling for very small devices */
+  .game-container .left .board .inner-board-div {
+    height: 20px;
+  }
+
+  .game-container .inner-board-div::after {
+    content: '';
+    /* height: 20px; */
+  }
+/* 
+  .game-container .player-area{
+    display: none;
+  }
+
+  .game-container .pawns{
+    display: none;
+  } */
+
+  .game-container .main-heading {
+    font-size: clamp(1.2rem, 7vw, 1.8rem);
+  }
+
+  .chat-container .input-area input[type="text"] {
+    font-size: 0.9rem;
+  }
+}

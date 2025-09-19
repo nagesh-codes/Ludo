@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react'
+import Loader from './Loader.jsx'
 import '../css-files/Main_Game.css'
 
 const Main_Game = () => {
   const redPath = [[8, 1], [8, 2], [8, 3], [8, 4], [8, 5], [8, 6], [8, 7]];
   const pawn = [1, 2, 3, 4];
   const [playersDivInfo, setPlayersDivInfo] = useState(['red', 'green', 'yellow', 'blue']);
-  const [playersName, setPlayersName] = useState(['play Nagesh', 'player 2', 'player 3', 'player 4']);
+  const [playersName, setPlayersName] = useState(['player', 'player', 'player 3', 'player 4']);
   const [howMuchPlayer, setHowMuchPlayer] = useState(['red', 'green', 'blue', 'yellow'])
+  const [showLoader, setShowLoader] = useState(false);
 
   useEffect(() => {
     let i = 0;
@@ -26,7 +28,8 @@ const Main_Game = () => {
 
   return (
     <div className='game-container'>
-      <div className="wrapper">
+      {showLoader ? <Loader txt="designing the game area."/>:''}
+      <div className={`wrapper ${showLoader ? 'hide':''}`}>
         <div className="main-heading">Ludo Made By Nagesh</div>
         <div className="middle">
           <div className="left">
