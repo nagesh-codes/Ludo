@@ -29,15 +29,15 @@
 }
 
 .game-container .main-heading {
-  font-family: 'Orbitron', sans-serif;
-  font-size: clamp(1.8rem, 5vw, 2.5rem);
-  text-align: center;
-  font-weight: 600;
-  letter-spacing: 2px;
-  /* animation: textGlow 2.5s ease-in-out infinite alternate; */
-  margin: 10px 0 5px 0;
-  color: #09b5ee;
-  text-shadow: 0 0 8px #7357ff, 0 0 16px #7357ff;
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(1.8rem, 5vw, 2.5rem);
+    text-align: center;
+    font-weight: 600;
+    letter-spacing: 2px;
+    /* animation: textGlow 2.5s ease-in-out infinite alternate; */
+    margin: 10px 0 5px 0;
+    color: #09b5ee;
+    text-shadow: 0 0 8px #7357ff, 0 0 16px #7357ff;
 }
 
 .game-container .middle {
@@ -57,7 +57,6 @@
     display: flex;
     flex-direction: column;
     font-size: 1rem;
-    /* line-height: 1.6; */
     opacity: 0.9;
     animation: slideInLeft 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
     padding: 10px;
@@ -77,8 +76,8 @@
     border: 2px solid rgba(255, 255, 255, 0.25);
     border-radius: 20px;
     display: grid;
-    grid-template-columns: repeat(13, 1fr);
-    grid-template-rows: repeat(13, 1fr);
+    grid-template-columns: repeat(15, 1fr);
+    grid-template-rows: repeat(15, 1fr);
     padding: 20px;
     box-shadow: inset 0 0 60px #fff;
 }
@@ -87,6 +86,7 @@
     height: 30px;
     aspect-ratio: 1;
     position: relative;
+    /* border: 1px solid black; */
 }
 
 .game-container .inner-board-div::after {
@@ -96,8 +96,9 @@
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: #b3ccfcc9;
-    border-radius: 7px;
-    height: 96%;
+    /* border-radius: 7px; */
+    border: 0.5px solid black;
+    height: 100%;
     aspect-ratio: 1;
     z-index: 3;
 }
@@ -138,12 +139,6 @@
     backdrop-filter: blur(60px);
 }
 
-.game-container .player-info .dice-area {
-    padding: 3px;
-    border: 2px solid;
-    border-radius: 5px;
-}
-
 .game-container .red-pawn {
     background-color: rgb(187, 46, 46);
 }
@@ -166,12 +161,12 @@
 }
 
 .game-container .pawns {
-    border-radius: 50% 50% 50% 0;
-    height: 28px;
+    border-radius: 50% 50% 50% 0%;
     border: 2px solid #fff;
     aspect-ratio: 1;
     rotate: -45deg;
     z-index: 12;
+    transform: translateY(-30%) translateX(30%);
 }
 
 .game-container .red-player {
@@ -312,6 +307,39 @@
     z-index: 4;
 }
 
+.game-container .dice-area {
+    border-radius: 20px;
+    box-shadow: inset 0 0 30px #fff;
+}
+
+.game-container .red-dice-area {
+    grid-row-start: 3;
+    grid-column-start: 3;
+    grid-row-end: 5;
+    grid-column-end: 5;
+}
+
+.game-container .green-dice-area {
+    grid-row-start: 3;
+    grid-column-start: 12;
+    grid-row-end: 5;
+    grid-column-end: 14;
+}
+
+.game-container .yellow-dice-area {
+    grid-row-start: 12;
+    grid-column-start: 3;
+    grid-row-end: 14;
+    grid-column-end: 5;
+}
+
+.game-container .blue-dice-area {
+    grid-row-start: 12;
+    grid-column-start: 12;
+    grid-row-end: 14;
+    grid-column-end: 14;
+}
+
 .game-container .icon {
     position: absolute;
     top: 50%;
@@ -324,6 +352,13 @@
     z-index: 4;
 }
 
+.game-container .left .leave-btn {
+    width: 100%;
+    border-radius: 20px;
+    border: 0;
+    padding: 9px 0px;
+}
+
 
 
 
@@ -334,7 +369,7 @@
 
 .chat-container {
     width: 490px;
-    height: 490px;
+    height: 520px;
     display: grid;
     grid-template-rows: 1fr 50px;
     padding: 15px;
@@ -348,7 +383,6 @@
 
 
 .chat-container .chat-area {
-    /* background: rgba(255, 255, 255, 0.15); */
     border-radius: 15px;
     padding: 10px;
     overflow-y: auto;
@@ -434,81 +468,38 @@
 }
 
 
-
-
-.hide{
-    display: none;
-}
-
-
-
-
-
-/* 📱 Responsive adjustments for smaller screens */
 @media (max-width: 768px) {
-  /* Hide the right panel on small devices */
-  .game-container .right {
-    display: none;
-  }
+    .game-container .right {
+        display: none;
+    }
 
-  /* Stack the middle section vertically */
-  .game-container .middle {
-    flex-direction: column;
-    gap: 15px;
-    padding: 5px;
-  }
+    .game-container .left {
+        width: calc(100vw - 10px);
+    }
 
-  /* Reduce padding and shadow for smaller viewports */
-  .game-container .left .board {
-    padding: 10px;
-    box-shadow: inset 0 0 30px #fff;
-  }
+    .game-container .left .board {
+        padding: 7px;
+        width: calc(100vw - 5px);
+        box-shadow: inset 0 0 30px #fff;
+    }
 
-  /* Adjust main heading for smaller screens */
-  .game-container .main-heading {
-    font-size: clamp(1.5rem, 6vw, 2rem);
-    letter-spacing: 1px;
-    margin: 8px 0 4px 0;
-  }
+    .game-container .left .board .inner-board-div {
+        height: auto;
+    }
 
-  /* Make chat container fit smaller screens */
-  .chat-container {
-    width: 100%;
-    height: auto;
-    padding: 10px;
-    border-radius: 15px;
-  }
-
-  .chat-container .input-area {
-    grid-template-columns: 1fr 40px;
-    gap: 8px;
-  }
+    .game-container .main-heading {
+        font-size: clamp(0.3rem, 6vw, 2rem);
+        letter-spacing: 1px;
+        margin: 8px 0 4px 0;
+    }
 }
 
 @media (max-width: 480px) {
-  /* Further scaling for very small devices */
-  .game-container .left .board .inner-board-div {
-    height: 20px;
-  }
+    .game-container .main-heading {
+        font-size: clamp(1.2rem, 7vw, 1.8rem);
+    }
 
-  .game-container .inner-board-div::after {
-    content: '';
-    /* height: 20px; */
-  }
-/* 
-  .game-container .player-area{
-    display: none;
-  }
-
-  .game-container .pawns{
-    display: none;
-  } */
-
-  .game-container .main-heading {
-    font-size: clamp(1.2rem, 7vw, 1.8rem);
-  }
-
-  .chat-container .input-area input[type="text"] {
-    font-size: 0.9rem;
-  }
+    .chat-container .input-area input[type="text"] {
+        font-size: 0.9rem;
+    }
 }

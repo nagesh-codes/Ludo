@@ -1,11 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Permanent+Marker&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Permanent+Marker&family=Orbitron:wght@600&display=swap');
 
 :root {
   --first-color: #42a5f5;
   --second-color: #7e57c2;
   --first-g-color: #09b5ee;
   --second-g-color: #7357ff;
+  --hue: 223;
+  --bg: hsl(var(--hue), 90%, 95%);
+  --fg: hsl(var(--hue), 90%, 5%);
+  --trans-dur: 0.3s;
+  font-size: calc(16px + (24 - 16) * (100vw - 320px) / (1280 - 320));
 }
 
 * {
@@ -31,7 +35,7 @@ body {
   display: none;
 }
 
-.hide{
+.hide {
   display: none;
 }
 

@@ -3,12 +3,12 @@ import Loader from './Loader.jsx'
 import '../css-files/Main_Game.css'
 
 const Main_Game = () => {
-  const redPath = [[8, 1], [8, 2], [8, 3], [8, 4], [8, 5], [8, 6], [8, 7]];
+  const redPath = [[8, 1], [8, 2], [8, 3], [8, 4], [8, 5], [8, 6], [8, 8]];
   const pawn = [1, 2, 3, 4];
   const [playersDivInfo, setPlayersDivInfo] = useState(['red', 'green', 'yellow', 'blue']);
   const [playersName, setPlayersName] = useState(['player', 'player', 'player 3', 'player 4']);
   const [howMuchPlayer, setHowMuchPlayer] = useState(['red', 'green', 'blue', 'yellow'])
-  const [showLoader, setShowLoader] = useState(false);
+  const [showLoader, setShowLoader] = useState(true);
 
   useEffect(() => {
     let i = 0;
@@ -22,14 +22,19 @@ const Main_Game = () => {
         setTimeout(() => {
           trav(i);
         }, 1000)
+      } else {
+        i = 0;
+        trav(i);
       }
     }
+    const timer = setTimeout(() => setShowLoader(true), 1000);
+    return () => clearTimeout(timer);
   }, []);
 
   return (
     <div className='game-container'>
-      {showLoader ? <Loader txt="designing the game area."/>:''}
-      <div className={`wrapper ${showLoader ? 'hide':''}`}>
+      {showLoader ? <Loader txt="designing the game area." /> : ''}
+      <div className={`${showLoader ? 'hide' : 'wrapper'}`}>
         <div className="main-heading">Ludo Made By Nagesh</div>
         <div className="middle">
           <div className="left">
@@ -39,7 +44,6 @@ const Main_Game = () => {
                 return (
                   <div className={`${pla}-player player-area`} key={ind}>
                     <div className="player-info">
-                      <div className="dice-area">🎲</div>
                       <div className="player-name">{playersName[ind]}</div>
                     </div>
                   </div>
@@ -47,6 +51,7 @@ const Main_Game = () => {
               })}
               {addPawns(howMuchPlayer)}
             </div>
+            <button className="leave-btn">Leave The Game</button>
           </div>
           <div className="right">
             <div className="chat-container">
@@ -73,7 +78,7 @@ const Main_Game = () => {
                   <h3>you</h3>
                   <p>hello akjsdhf ajsd fhalksjd fhalsdjf halskjd fhalskdjf halskdjf hlsakjd fhalsjdf h</p>
                 </div>
-                
+
 
                 <div className="lft-txt">
                   <h3>Nagesh</h3>
@@ -221,6 +226,11 @@ function addPawns(howMuchPlayer) {
         <div key={`${clr} + ${j}`} className={`${clr}-pawn ${clr}-pawn-${j + 1} pawns`}></div>
       )
     }
+  });
+  howMuchPlayer.forEach(clr => {
+    pawns.push(
+      <div key={clr} className={`${clr}-dice-area dice-area`}></div>
+    )
   });
   return pawns;
 }
