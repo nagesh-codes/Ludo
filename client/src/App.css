@@ -9,6 +9,12 @@
   --bg: hsl(var(--hue), 90%, 95%);
   --fg: hsl(var(--hue), 90%, 5%);
   --trans-dur: 0.3s;
+  --size: 30px;
+  --duration: 1.4s;
+  --accent: #222831;
+  --bg: linear-gradient(135deg, #b3ccfcc9, #b3ccfcc9);
+  --face-bg: #b3ccfcc9;
+  --dot: #111316;
 }
 
 * {

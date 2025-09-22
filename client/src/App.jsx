@@ -8,6 +8,7 @@ import Main_Game from './pages/Main_Game';
 import './css-files/all-keyframes.css'
 import './App.css'
 import { useEffect } from 'react';
+import Dice from './pages/Dice';
 
 function App() {
   useEffect(() => {
@@ -28,7 +29,7 @@ function App() {
           <Route path={"/join-room/:roomid"} element={<Join_Room />}></Route>
           <Route path={"/waiting-area"} element={<Waiting_Area />}></Route>
           <Route path={"/main-game"} element={<Main_Game />}></Route>
-          <Route path={'*'} element={<Loader />}></Route>
+          <Route path={'*'} element={<Dice />}></Route>
         </Routes>
       </BrowserRouter>
     </>

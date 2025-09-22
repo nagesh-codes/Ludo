@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Loader from './Loader.jsx'
 import '../css-files/Main_Game.css'
+import Dice from './Dice.jsx';
 
 const Main_Game = () => {
   const redPath = [[8, 1], [8, 2], [8, 3], [8, 4], [8, 5], [8, 6], [8, 8]];
@@ -9,6 +10,12 @@ const Main_Game = () => {
   const [playersName, setPlayersName] = useState(['player', 'player', 'player 3', 'player 4']);
   const [howMuchPlayer, setHowMuchPlayer] = useState(['red', 'green', 'blue', 'yellow'])
   const [showLoader, setShowLoader] = useState(true);
+  const [diceValue, setDiceValue] = useState(0);
+  const [diceIndex, setDiceIndex] = useState(0);
+
+  useEffect(() => {
+    // console.log("diceValue = " + diceValue)
+  }, [diceValue])
 
   useEffect(() => {
     let i = 0;
@@ -24,10 +31,10 @@ const Main_Game = () => {
         }, 1000)
       } else {
         i = 0;
-        trav(i);
+        // trav(i);
       }
     }
-    const timer = setTimeout(() => setShowLoader(true), 1000);
+    const timer = setTimeout(() => setShowLoader(false), 1000);
     return () => clearTimeout(timer);
   }, []);
 
@@ -49,7 +56,7 @@ const Main_Game = () => {
                   </div>
                 )
               })}
-              {addPawns(howMuchPlayer)}
+              {addPawns(howMuchPlayer, diceValue, setDiceValue,diceIndex)}
             </div>
             <button className="leave-btn">Leave The Game</button>
           </div>
@@ -194,11 +201,7 @@ function addDivs() {
         <div
           key={`${i}-${j}`}
           className={`
-                      ${(i > 6 && i < 10) || (j > 6 && j < 10) ? 'inner-board-div' : ''} 
-                      ${(i < 7 && i > 1 && j == 8) || (i == 2 && j == 9) ? 'green-path' : ''} 
-                      ${(i > 9 && i <= 14 && j == 8) || (i == 14 && j == 7) ? 'blue-path' : ''}
-                      ${(i == 8 && j > 1 && j < 7) || (i == 7 && j == 2) ? 'red-path' : ''}
-                      ${(i == 8 && j > 9 && j <= 14) || (i == 9 && j == 14) ? 'yellow-path' : ''}
+                      ${(i > 6 && i < 10) || (j > 6 && j < 10) ? (i < 7 && i > 1 && j == 8) || (i == 2 && j == 9) ? 'green-path' : (i == 8 && j > 1 && j < 7) || (i == 7 && j == 2) ? 'red-path' : (i > 9 && i <= 14 && j == 8) || (i == 14 && j == 7) ? 'blue-path' : (i == 8 && j > 9 && j <= 14) || (i == 9 && j == 14) ? 'yellow-path' : 'inner-board-div' : ''}
                       `}
           style={{ gridRowStart: i, gridColumnStart: j }}
         >
@@ -218,7 +221,8 @@ function addDivs() {
   return divs;
 }
 
-function addPawns(howMuchPlayer) {
+function addPawns(howMuchPlayer, diceValue, setDiceValue,diceIndex) {
+
   const pawns = []
   howMuchPlayer.forEach(clr => {
     for (let j = 0; j < 4; j++) {
@@ -227,11 +231,14 @@ function addPawns(howMuchPlayer) {
       )
     }
   });
-  howMuchPlayer.forEach(clr => {
+  howMuchPlayer.forEach((clr, ind) => {
     pawns.push(
-      <div key={clr} className={`${clr}-dice-area dice-area`}></div>
+      <div key={clr} className={`${clr}-dice-area dice-area`} onClick={() => { setDiceValue(Math.floor(Math.random() * 6) + 1) }}>
+        {diceIndex === ind ? <Dice number={diceValue}/> : ''}
+      </div>
     )
   });
   return pawns;
 }
+
 export default Main_Game
