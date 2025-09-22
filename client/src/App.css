@@ -12,8 +12,8 @@
   --size: 30px;
   --duration: 1.4s;
   --accent: #222831;
-  --bg: linear-gradient(135deg, #b3ccfcc9, #b3ccfcc9);
-  --face-bg: #b3ccfcc9;
+  --bg: linear-gradient(135deg, #ececec, #f7f7f9);
+  --face-bg: #ffffff;
   --dot: #111316;
 }
 

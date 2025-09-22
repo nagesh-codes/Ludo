@@ -12,10 +12,15 @@ const Main_Game = () => {
   const [showLoader, setShowLoader] = useState(true);
   const [diceValue, setDiceValue] = useState(0);
   const [diceIndex, setDiceIndex] = useState(0);
+  const [diceDisable, setDiceDisable] = useState(false);
 
   useEffect(() => {
-    // console.log("diceValue = " + diceValue)
-  }, [diceValue])
+    console.log("diceValue =", diceValue);
+    setTimeout(()=>{
+      
+      setDiceIndex(prev => (prev + 1 == 5 ? 0 : prev + 1));
+    },120);
+}, [diceValue]);
 
   useEffect(() => {
     let i = 0;
@@ -56,7 +61,7 @@ const Main_Game = () => {
                   </div>
                 )
               })}
-              {addPawns(howMuchPlayer, diceValue, setDiceValue,diceIndex)}
+              {addPawns(howMuchPlayer, diceValue, setDiceValue, diceIndex, diceDisable)}
             </div>
             <button className="leave-btn">Leave The Game</button>
           </div>
@@ -221,7 +226,7 @@ function addDivs() {
   return divs;
 }
 
-function addPawns(howMuchPlayer, diceValue, setDiceValue,diceIndex) {
+function addPawns(howMuchPlayer, diceValue, setDiceValue, diceIndex, diceDisable) {
 
   const pawns = []
   howMuchPlayer.forEach(clr => {
@@ -234,7 +239,7 @@ function addPawns(howMuchPlayer, diceValue, setDiceValue,diceIndex) {
   howMuchPlayer.forEach((clr, ind) => {
     pawns.push(
       <div key={clr} className={`${clr}-dice-area dice-area`} onClick={() => { setDiceValue(Math.floor(Math.random() * 6) + 1) }}>
-        {diceIndex === ind ? <Dice number={diceValue}/> : ''}
+        {diceIndex === ind ? <Dice number={diceValue} isDisable={diceDisable} /> : ''}
       </div>
     )
   });
