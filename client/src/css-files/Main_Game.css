@@ -229,6 +229,7 @@
 .game-container .red-pawn-1 {
     grid-row-start: 3;
     grid-column-start: 2;
+    animation: animate 0.5s infinite linear;
 }
 
 .game-container .red-pawn-2 {
@@ -530,7 +531,7 @@
     }
 }
 
-.test{
+.test {
     background-color: cyan;
     z-index: 1212;
     border-radius: 20px 0 0 0;

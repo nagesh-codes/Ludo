@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useSocket } from '../components/socketProvider';
+import Loader from './Loader'
+import { toast } from 'react-toastify';
 import '../css-files/Create_Room.css'
 
 const Create_Room = () => {
@@ -8,14 +11,43 @@ const Create_Room = () => {
   const [clr, setClr] = useState('r')
   const [roomID, setRoomID] = useState('Generating...');
   const navigate = useNavigate();
+  const [showLoader, setShowLoader] = useState(false)
+  const { socket, connected } = useSocket();
 
 
-  console.log(maxplayer);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setShowLoader(true);
+    sessionStorage.setItem('username', username);
+    sessionStorage.setItem('maxplayer', maxplayer);
+    socket.emit("CreateNewRoom", { username, roomID, clr, maxplayer });
+  }
 
+  useEffect(() => {
+    if (!socket || !connected) return;
+    socket.on('takeID', (dt) => {
+      sessionStorage.setItem('roomid', dt);
+      setRoomID(dt);
+    })
+
+    socket.emit('GenerateNewRoomID');
+
+    socket.on('RoomCreated', () => {
+      toast.success('Room Successfully Created');
+      navigate("/waiting-area")
+    })
+
+    return () => {
+      socket.off('takeID');
+      socket.off('RoomCreated');
+    }
+
+  }, [socket, connected]);
 
   return (
     <div className="create-container">
-      <div className="wrapper">
+      {showLoader ? <Loader /> : ''}
+      <div className={showLoader ? 'hide' : 'wrapper'}>
         <div className="main-heading">
           Create a New Room
         </div>
@@ -25,7 +57,7 @@ const Create_Room = () => {
               Enter your name, pick 2–4 players, choose the color, and get a unique Room ID to share. Friends can join instantly for smooth, real-time Ludo fun!
             </div>
           </div>
-          <div className="right">
+          <form className="right" onSubmit={handleSubmit}>
             <div className="fields">
               <label>Your Name</label>
               <input
@@ -33,6 +65,7 @@ const Create_Room = () => {
                 placeholder='Enter Your Name'
                 value={username}
                 onInput={e => setUsername(e.target.value)}
+                required
               />
             </div>
             <div className="fields">
@@ -65,7 +98,7 @@ const Create_Room = () => {
               <button type='submit' onClick={() => { navigate("/") }}>Home</button>
             </div>
             <p>You Will Get A Sharable Link.</p>
-          </div>
+          </form>
         </div>
       </div>
     </div>

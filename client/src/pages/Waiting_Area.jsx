@@ -2,18 +2,22 @@ import React, { useEffect, useState } from 'react';
 import Avatar from 'react-avatar';
 import QRCode from 'qrcode';
 import '../css-files/Waiting_Area.css';
+import { useSocket } from '../components/socketProvider';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const Waiting_Area = () => {
-  const maxplayer = sessionStorage.getItem('maxPlayer') || 3
-  const [pla_name, setPla_name] = useState(['Nagesh Gh', 'mahesh c']);
+  const maxplayer = sessionStorage.getItem('maxplayer');
+  const [pla_name, setPla_name] = useState([sessionStorage.getItem('username')]);
+  const [roomid, setRoomid] = useState(sessionStorage.getItem('roomid'));
+  const { socket, connected } = useSocket();
+  const navigate = useNavigate();
 
   useEffect(() => {
-
     for (let i = 0; i < maxplayer - 1; i++) {
       pla_name.push(NaN);
     }
-
-    QRCode.toCanvas(document.getElementById("canvas"), window.location.origin, {
+    QRCode.toCanvas(document.getElementById("canvas"), window.location.origin + '/join-room/' + roomid, {
       width: window.innerWidth < 600 ? 180 : 330,
       color: {
         dark: "#ffffff",
@@ -25,7 +29,31 @@ const Waiting_Area = () => {
       }
     });
 
-  }, [])
+  }, []);
+
+  useEffect(() => {
+    if (!socket || !connected) return;
+    socket.emit('GetStatus',{roomid});
+    socket.on('TakeStatus',(dt)=>{
+
+    });
+
+    socket.on('GoToHome',()=>{
+      navigate("/",{replace:true});
+      window.location.reload();
+    });
+
+    socket.on('UserJoined',(dt)=>{
+      toast.success('user joind');
+      setPla_name([sessionStorage.getItem('username')],dt,NaN,NaN);
+    })
+
+    return () => {
+      socket.off('TakeStatus');
+      socket.off('UserJoined');
+      socket.off('GoToHome');
+    }
+  }, [socket, connected])
 
   return (
     <div className="waiting-container">
