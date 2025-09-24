@@ -13,6 +13,7 @@ const Create_Room = () => {
   const navigate = useNavigate();
   const [showLoader, setShowLoader] = useState(false)
   const { socket, connected } = useSocket();
+  const [colors, setColors] = useState(['r', 'b', 'y', 'g']);
 
 
   const handleSubmit = (e) => {
@@ -65,24 +66,33 @@ const Create_Room = () => {
                 placeholder='Enter Your Name'
                 value={username}
                 onInput={e => setUsername(e.target.value)}
+                maxLength={8}
                 required
               />
             </div>
             <div className="fields">
               <label>Choose Players</label>
               <div className="player">
-                <div className={`${maxplayer === 2 ? 'select' : 'p2'}`} onClick={() => setMaxplayer(2)}>2</div>
-                <div className={`${maxplayer === 3 ? 'select' : 'p2'}`} onClick={() => setMaxplayer(3)}>3</div>
-                <div className={`${maxplayer === 4 ? 'select' : 'p2'}`} onClick={() => setMaxplayer(4)}>4</div>
+                <button type='button' className={`${maxplayer === 2 ? 'select' : 'p2'}`} onClick={() => setMaxplayer(2)}>2</button>
+                <button type='button' className={`${maxplayer === 3 ? 'select' : 'p2'}`} onClick={() => setMaxplayer(3)}>3</button>
+                <button type='button' className={`${maxplayer === 4 ? 'select' : 'p2'}`} onClick={() => setMaxplayer(4)}>4</button>
               </div>
             </div>
             <div className="fields">
               <label>Choose Your Fav Color</label>
               <div className="player-color">
-                <div onClick={() => { setClr("r") }} className={`red ${clr === 'r' ? 'clr-select' : ''}`}></div>
+                {colors.map((c, i) => {
+                  return (
+                    <div 
+                      key={i} 
+                      onClick={() => { setClr(c) }}
+                      className={`${c === 'r' ? 'red' : c === 'b' ? 'blue' : c === 'g' ? 'green' : 'yellow'} ${clr === c ? 'clr-select' : ''}`}></div>
+                  )
+                })}
+                {/* <div onClick={() => { setClr("r") }} className={`red ${clr === 'r' ? 'clr-select' : ''}`}></div>
                 <div onClick={() => { setClr("b") }} className={`blue ${clr === 'b' ? 'clr-select' : ''}`}></div>
                 <div onClick={() => { setClr("y") }} className={`yellow ${clr === 'y' ? 'clr-select' : ''}`}></div>
-                <div onClick={() => { setClr("g") }} className={`green ${clr === 'g' ? 'clr-select' : ''}`}></div>
+                <div onClick={() => { setClr("g") }} className={`green ${clr === 'g' ? 'clr-select' : ''}`}></div> */}
               </div>
             </div>
             <div className="fields">
@@ -95,7 +105,7 @@ const Create_Room = () => {
             </div>
             <div className="fields btns">
               <button type='submit'>Create Room</button>
-              <button type='submit' onClick={() => { navigate("/") }}>Home</button>
+              <button type='button' onClick={() => { navigate("/") }}>Home</button>
             </div>
             <p>You Will Get A Sharable Link.</p>
           </form>

@@ -33,19 +33,26 @@ const Waiting_Area = () => {
 
   useEffect(() => {
     if (!socket || !connected) return;
-    socket.emit('GetStatus',{roomid});
-    socket.on('TakeStatus',(dt)=>{
+    socket.emit('GetStatus', { roomid });
+    socket.on('TakeStatus', (dt) => {
 
     });
 
-    socket.on('GoToHome',()=>{
-      navigate("/",{replace:true});
+    socket.on('GoToHome', () => {
+      navigate("/");
       window.location.reload();
     });
 
-    socket.on('UserJoined',(dt)=>{
-      toast.success('user joind');
-      setPla_name([sessionStorage.getItem('username')],dt,NaN,NaN);
+    socket.on('UserJoined', (dt) => {
+      setPla_name(dt.data);
+      if (dt.isMatchStarted) {
+        toast.success("All Friends Are Joined");
+        setTimeout(() => {
+          navigate('/main-game');
+        }, 1000);
+      } else {
+        toast.success('Friend joind');
+      }
     })
 
     return () => {
@@ -75,7 +82,7 @@ const Waiting_Area = () => {
             <div className="qrcode">
               <canvas id='canvas'></canvas>
             </div>
-            <button className="shr-btn">
+            <button className="shr-btn" style={{ width: window.innerWidth < 600 ? '180px' : '330px' }}>
               Invite Friends
             </button>
           </div>

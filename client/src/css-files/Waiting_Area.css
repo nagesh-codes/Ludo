@@ -5,7 +5,7 @@
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    background: linear-gradient(135deg, #1ec4d9, #7c5eff);
+    background: var(--back-color);
     position: relative;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     animation: fadeInBg 1.5s ease forwards;
@@ -14,7 +14,7 @@
 
 .waiting-container .wrapper {
     width: 75%;
-    padding: 30px 40px;
+    padding: 10px;
     border: 1px solid rgba(255, 255, 255, 0.25);
     backdrop-filter: blur(15px) saturate(150%);
     background: rgba(255, 255, 255, 0.08);
@@ -40,7 +40,6 @@
 
 .waiting-container .middle {
     display: flex;
-    gap: 30px;
     justify-content: center;
 }
 
@@ -48,10 +47,9 @@
 .waiting-container .right {
     display: flex;
     align-items: center;
-    width: 50%;
+    width: 100%;
     flex-direction: column;
     justify-content: space-around;
-    gap: 30px;
 }
 
 .waiting-container .left {
@@ -157,8 +155,9 @@
 
 .waiting-container .info {
     background-color: #1ec4d9;
-    padding: 10px;
+    padding: 30px;
     border-radius: 20px;
+    width: 90%;
 }
 
 @media (max-width: 1200px) {
@@ -250,7 +249,7 @@
     }
 
     .waiting-container .player-status {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr 1fr;
         gap: 12px;
     }
 
@@ -274,6 +273,12 @@
         border-radius: 14px;
         left: 50%;
         transform: translate(-50%, -50%);
+    }
+
+    .waiting-container .info{
+        padding: 10px;
+        width: 100%;
+        /* display: none; */
     }
 }
 
@@ -300,7 +305,7 @@
 
     .waiting-container .left,
     .waiting-container .right {
-        width: 100%;
+        /* width: 100%; */
         gap: 10px;
     }
 
@@ -337,7 +342,10 @@
         transform: translate(-50%, -50%);
         padding: 6px;
         border-radius: 12px;
-        height: auto;
+    }
+
+    .waiting-container .info{
+        /* display: none; */
     }
 }
 
@@ -374,5 +382,9 @@
 
     .waiting-container .player-status .pla .ready .pl-st span:last-child {
         font-size: 0.7rem;
+    }
+
+    .waiting-container .info{
+        /* display: none; */
     }
 }

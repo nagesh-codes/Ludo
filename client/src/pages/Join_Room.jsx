@@ -13,12 +13,16 @@ const Join_Room = () => {
     const { roomid } = useParams();
     const [disableBtn, setDisableBtn] = useState(false);
     const { socket, connected } = useSocket();
-
+    const [colors, setColors] = useState(['r', 'b', 'y', 'g']);
 
 
     const handleSubmit = (e) => {
         e.preventDefault();
         socket.emit('JoinUser', { username, roomID, clr });
+    }
+
+    const getColor = () => {
+        socket.emit('GetClr', { roomID });
     }
 
     useEffect(() => {
@@ -38,12 +42,46 @@ const Join_Room = () => {
         }
 
         socket.on('GoToHome', () => {
-            toast.error(`${roomID} this room is not availabel:(`);
-            navigate("/");
+            if (roomid) {
+                toast.error(`The Invite Link Is Invalid :(`);
+                toast.error('Redirecting To Home Page');
+                navigate("/");
+            } else {
+
+            }
+        });
+
+        socket.on('RoomNotAvailabel', () => {
+            toast.error('Such Room Is Not Avialabel :(');
+        });
+
+        socket.on('NamePresent', () => {
+            toast.error('Your Username is Already Takenes, Change It!');
+        });
+
+        socket.on('TakeClr', (dt) => {
+            setClr(dt[0]);
+            setColors(dt);
+        });
+
+        socket.on('Joined', (dt) => {
+            toast.success('Successfully Room Joined :)');
+            sessionStorage.setItem('roomid', roomID);
+            sessionStorage.setItem('maxplayer', dt.maxplayer);
+            sessionStorage.setItem('username', username);
+            if (dt.isMatchStarted) {
+                navigate('/main-game');
+            } else {
+                navigate('/waiting-area');
+            }
         });
 
         return () => {
             socket.off('GoToHome');
+            socket.off('RoomNotAvailabel');
+            socket.off('NamePresent');
+            socket.off('TakeClr');
+            socket.off('Join');
         }
 
     }, [socket, connected]);
@@ -66,16 +104,22 @@ const Join_Room = () => {
                                 placeholder='Enter Your Name'
                                 value={username}
                                 onInput={e => setUsername(e.target.value)}
+                                maxLength={6}
                                 required
                             />
                         </div>
                         <div className="fields">
                             <label>Choose Your Fav Color</label>
                             <div className="player-color">
-                                <div onClick={() => { setClr("r") }} className={`red ${clr === 'r' ? 'clr-select' : ''}`}></div>
+                                {colors.map((c, i) => {
+                                    return (
+                                        <div key={i} onClick={() => { setClr(c) }} className={`${c === 'r' ? 'red' : c === 'b' ? 'blue' : c === 'g' ? 'green' : 'yellow'} ${clr === c ? 'clr-select' : ''}`}></div>
+                                    )
+                                })}
+                                {/* <div onClick={() => { setClr("r") }} className={`red ${clr === 'r' ? 'clr-select' : ''}`}></div>
                                 <div onClick={() => { setClr("b") }} className={`blue ${clr === 'b' ? 'clr-select' : ''}`}></div>
                                 <div onClick={() => { setClr("y") }} className={`yellow ${clr === 'y' ? 'clr-select' : ''}`}></div>
-                                <div onClick={() => { setClr("g") }} className={`green ${clr === 'g' ? 'clr-select' : ''}`}></div>
+                                <div onClick={() => { setClr("g") }} className={`green ${clr === 'g' ? 'clr-select' : ''}`}></div> */}
                             </div>
                         </div>
                         <div className="fields">
@@ -84,15 +128,16 @@ const Join_Room = () => {
                                 type="text"
                                 placeholder='Enter Your Roomid'
                                 value={roomID}
-                                onInput={(e) => { setRoomID(e.target.value) }}
+                                onInput={(e) => { setRoomID(e.target.value); roomID.length === 6 ? getColor() : '' }}
                                 disabled={disableBtn}
+                                maxLength={6}
                                 required
                             />
                             <h4>{txt}</h4>
                         </div>
                         <div className="fields btns">
                             <button type='submit'>Join Room</button>
-                            <button type='submit' onClick={() => { navigate("/") }}>Home</button>
+                            <button type='button' onClick={() => { navigate("/") }}>Home</button>
                         </div>
                     </form>
                 </div>

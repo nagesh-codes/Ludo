@@ -22,7 +22,7 @@ function App() {
 
   return (
     <>
-      <div id="particles-js"></div>
+      {/* <div id="particles-js"></div> */}
       <ToastContainer position="top-right" autoClose={3000} />
       <Routes>
         <Route path={"/"} element={<Home />}></Route>
