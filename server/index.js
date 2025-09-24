@@ -52,7 +52,7 @@ io.on('connection', (socket) => {
                 createdBy: data.username,
                 createdAt: Date.now(),
                 maxPlayer: data.maxplayer,
-                isMathStarted: false,
+                isMatchStarted: false,
                 turnIndex: 0,
                 diceValue: null,
                 players: [
@@ -70,7 +70,7 @@ io.on('connection', (socket) => {
 
     socket.on('JoinUser', (data) => {
         try {
-            if (!ROOMS[data.roomID] || ROOMS[data.roomID].isMathStarted) {
+            if (!ROOMS[data.roomID] || ROOMS[data.roomID].isMatchStarted) {
                 io.to(socket.id).emit('RoomNotAvailabel');
                 return;
             }
@@ -92,12 +92,12 @@ io.on('connection', (socket) => {
             ROOMS[data.roomID].player_names[ROOMS[data.roomID].player_names.findIndex(x => Number.isNaN(x))] = data.username;
             console.table(ROOMS[data.roomID].players);
             if (!ROOMS[data.roomID].player_names.includes(NaN)) {
-                ROOMS[data.roomID].isMathStarted = true;
+                ROOMS[data.roomID].isMatchStarted = true;
             }
             ROOMS[data.roomID].players.map((pla) => {
-                io.to(USERS[pla.userid].socketID).emit('UserJoined', { data: ROOMS[data.roomID].player_names, isMatchStarted: ROOMS[data.roomID].isMathStarted });
+                io.to(USERS[pla.userid].socketID).emit('UserJoined', { data: ROOMS[data.roomID].player_names, isMatchStarted: ROOMS[data.roomID].isMatchStarted });
             });
-            io.to(socket.id).emit('Joined', { isMatchStarted: ROOMS[data.roomID].isMathStarted, maxplayer: ROOMS[data.roomID].maxPlayer });
+            io.to(socket.id).emit('Joined', { isMatchStarted: ROOMS[data.roomID].isMatchStarted, maxplayer: ROOMS[data.roomID].maxPlayer });
         } catch (error) {
             console.error(error.message)
         }
@@ -105,11 +105,12 @@ io.on('connection', (socket) => {
 
     socket.on('GetStatus', (data) => {
         try {
-            if (!ROOMS[data.roomid]) {
+            if (!ROOMS[data.roomID]) {
                 io.to(socket.id).emit('GoToHome');
                 return;
             }
-            io.to(socket.id).emit('TakeStatus', { data: ROOMS[data.roomid].player_names });
+            console.log('getStatus is arrived');
+            io.to(socket.id).emit('TakeStatus', { data: ROOMS[data.roomID].player_names, isMatchStarted: ROOMS[data.roomID].isMatchStarted });
         } catch (error) {
             console.log(error.message);
         }
@@ -117,7 +118,7 @@ io.on('connection', (socket) => {
 
     socket.on('GetClr', (data) => {
         try {
-            if (!ROOMS[data.roomID] || ROOMS[data.roomID].isMathStarted) {
+            if (!ROOMS[data.roomID] || ROOMS[data.roomID].isMatchStarted) {
                 io.to(socket.id).emit('GoToHome');
             } else {
                 let clr = [];

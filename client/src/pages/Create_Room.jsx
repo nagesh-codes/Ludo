@@ -21,6 +21,7 @@ const Create_Room = () => {
     setShowLoader(true);
     sessionStorage.setItem('username', username);
     sessionStorage.setItem('maxplayer', maxplayer);
+    sessionStorage.setItem('roomid',roomID);
     socket.emit("CreateNewRoom", { username, roomID, clr, maxplayer });
   }
 

@@ -14,9 +14,14 @@ const Waiting_Area = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (!sessionStorage.getItem('username') || !sessionStorage.getItem('roomid')) {
+      // navigate("/");
+    }
+
     for (let i = 0; i < maxplayer - 1; i++) {
       pla_name.push(NaN);
     }
+
     QRCode.toCanvas(document.getElementById("canvas"), window.location.origin + '/join-room/' + roomid, {
       width: window.innerWidth < 600 ? 180 : 330,
       color: {
@@ -33,13 +38,20 @@ const Waiting_Area = () => {
 
   useEffect(() => {
     if (!socket || !connected) return;
-    socket.emit('GetStatus', { roomid });
-    socket.on('TakeStatus', (dt) => {
+    console.log('sd')
+    socket.emit('GetStatus', { roomID:roomid });
 
+    socket.on('TakeStatus', (dt) => {
+      setPla_name(dt.data);
+      console.log(dt)
+      if (dt.isMatchStarted) {
+        navigate('/main-game');
+      }
     });
 
     socket.on('GoToHome', () => {
       navigate("/");
+      alert('')
       window.location.reload();
     });
 

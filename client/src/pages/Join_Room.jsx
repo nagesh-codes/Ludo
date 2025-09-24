@@ -34,6 +34,10 @@ const Join_Room = () => {
     }, []);
 
     useEffect(() => {
+        sessionStorage.setItem('username', username);
+    }, [username])
+
+    useEffect(() => {
         if (!socket || !connected) return;
         if (roomid) {
             setRoomID(roomid);
@@ -68,7 +72,6 @@ const Join_Room = () => {
             toast.success('Successfully Room Joined :)');
             sessionStorage.setItem('roomid', roomID);
             sessionStorage.setItem('maxplayer', dt.maxplayer);
-            sessionStorage.setItem('username', username);
             if (dt.isMatchStarted) {
                 navigate('/main-game');
             } else {
