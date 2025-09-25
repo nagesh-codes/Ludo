@@ -36,7 +36,7 @@ export default function Dice({ number, isDisable = false }) {
     ];
 
     const roll = (newVal) => {
-        if (rollingRef.current || isDisable) return;
+        // if (rollingRef.current || isDisable) return;
         rollingRef.current = true;
         setValue('…');
         const [bx, by, bz] = faceAngles[newVal];
@@ -76,6 +76,7 @@ export default function Dice({ number, isDisable = false }) {
         if (number > 0) {
             roll(number);
         }
+        console.log("numer="+number)
     }, [number]);
 
     useEffect(() => {

@@ -8,7 +8,8 @@ import { toast } from 'react-toastify';
 
 const Waiting_Area = () => {
   const maxplayer = sessionStorage.getItem('maxplayer');
-  const [pla_name, setPla_name] = useState([sessionStorage.getItem('username')]);
+  const [username, setUsername] = useState([sessionStorage.getItem('username')])
+  const [pla_name, setPla_name] = useState(username);
   const [roomid, setRoomid] = useState(sessionStorage.getItem('roomid'));
   const { socket, connected } = useSocket();
   const navigate = useNavigate();
@@ -38,10 +39,10 @@ const Waiting_Area = () => {
 
   useEffect(() => {
     if (!socket || !connected) return;
-    console.log('sd')
-    socket.emit('GetStatus', { roomID:roomid });
+    socket.emit('ChangeSocketID', { roomID: roomid, username });
+    socket.emit('GetPlayersStatus', { roomID: roomid });
 
-    socket.on('TakeStatus', (dt) => {
+    socket.on('TakePlayersStatus', (dt) => {
       setPla_name(dt.data);
       console.log(dt)
       if (dt.isMatchStarted) {
@@ -51,7 +52,6 @@ const Waiting_Area = () => {
 
     socket.on('GoToHome', () => {
       navigate("/");
-      alert('')
       window.location.reload();
     });
 
@@ -61,14 +61,14 @@ const Waiting_Area = () => {
         toast.success("All Friends Are Joined");
         setTimeout(() => {
           navigate('/main-game');
-        }, 1000);
+        }, 1200);
       } else {
         toast.success('Friend joind');
       }
     })
 
     return () => {
-      socket.off('TakeStatus');
+      socket.off('TakePlayersStatus');
       socket.off('UserJoined');
       socket.off('GoToHome');
     }

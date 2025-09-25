@@ -6,18 +6,24 @@ import { toast } from 'react-toastify';
 
 const Join_Room = () => {
     const [username, setUsername] = useState('');
-    const [clr, setClr] = useState('r');
+    const [clr, setClr] = useState('red');
     const [roomID, setRoomID] = useState('');
     const navigate = useNavigate();
     const [txt, setTxt] = useState('Enter RoomID Provided By Your Friend.');
     const { roomid } = useParams();
     const [disableBtn, setDisableBtn] = useState(false);
+    const [checkingRoomId, setCheckingRoomId] = useState(true);
     const { socket, connected } = useSocket();
-    const [colors, setColors] = useState(['r', 'b', 'y', 'g']);
+    const [colors, setColors] = useState(['red', 'blue', 'yellow', 'green']);
 
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        if (checkingRoomId) {
+            toast.warn('please wait We Are Checking Your RoomId');
+            return;
+        }
+        sessionStorage.setItem('roomid', roomID);
         socket.emit('JoinUser', { username, roomID, clr });
     }
 
@@ -34,12 +40,21 @@ const Join_Room = () => {
     }, []);
 
     useEffect(() => {
+        if (!socket || !connected) return;
+        sessionStorage.setItem('roomid', roomID);
+        setCheckingRoomId(true);
+        setColors(['red', 'blue', 'yellow', 'green']);
+        getColor();
+    }, [roomID])
+
+    useEffect(() => {
         sessionStorage.setItem('username', username);
     }, [username])
 
     useEffect(() => {
         if (!socket || !connected) return;
         if (roomid) {
+            sessionStorage.setItem('roomid', roomID);
             setRoomID(roomid);
             setDisableBtn(true);
             socket.emit('GetClr', { roomID });
@@ -51,7 +66,7 @@ const Join_Room = () => {
                 toast.error('Redirecting To Home Page');
                 navigate("/");
             } else {
-
+                setCheckingRoomId(false);
             }
         });
 
@@ -64,17 +79,17 @@ const Join_Room = () => {
         });
 
         socket.on('TakeClr', (dt) => {
+            setCheckingRoomId(false);
             setClr(dt[0]);
             setColors(dt);
         });
 
         socket.on('Joined', (dt) => {
-            toast.success('Successfully Room Joined :)');
-            sessionStorage.setItem('roomid', roomID);
             sessionStorage.setItem('maxplayer', dt.maxplayer);
             if (dt.isMatchStarted) {
                 navigate('/main-game');
             } else {
+                toast.success('you are going to waiting area');
                 navigate('/waiting-area');
             }
         });
@@ -84,7 +99,7 @@ const Join_Room = () => {
             socket.off('RoomNotAvailabel');
             socket.off('NamePresent');
             socket.off('TakeClr');
-            socket.off('Join');
+            socket.off('Joined');
         }
 
     }, [socket, connected]);
@@ -107,7 +122,7 @@ const Join_Room = () => {
                                 placeholder='Enter Your Name'
                                 value={username}
                                 onInput={e => setUsername(e.target.value)}
-                                maxLength={6}
+                                maxLength={8}
                                 required
                             />
                         </div>
@@ -116,13 +131,9 @@ const Join_Room = () => {
                             <div className="player-color">
                                 {colors.map((c, i) => {
                                     return (
-                                        <div key={i} onClick={() => { setClr(c) }} className={`${c === 'r' ? 'red' : c === 'b' ? 'blue' : c === 'g' ? 'green' : 'yellow'} ${clr === c ? 'clr-select' : ''}`}></div>
+                                        <div key={i} onClick={() => { setClr(c) }} className={`${c} ${clr === c ? 'clr-select' : ''}`}></div>
                                     )
                                 })}
-                                {/* <div onClick={() => { setClr("r") }} className={`red ${clr === 'r' ? 'clr-select' : ''}`}></div>
-                                <div onClick={() => { setClr("b") }} className={`blue ${clr === 'b' ? 'clr-select' : ''}`}></div>
-                                <div onClick={() => { setClr("y") }} className={`yellow ${clr === 'y' ? 'clr-select' : ''}`}></div>
-                                <div onClick={() => { setClr("g") }} className={`green ${clr === 'g' ? 'clr-select' : ''}`}></div> */}
                             </div>
                         </div>
                         <div className="fields">
@@ -131,7 +142,7 @@ const Join_Room = () => {
                                 type="text"
                                 placeholder='Enter Your Roomid'
                                 value={roomID}
-                                onInput={(e) => { setRoomID(e.target.value); roomID.length === 6 ? getColor() : '' }}
+                                onInput={(e) => { setRoomID(e.target.value) }}
                                 disabled={disableBtn}
                                 maxLength={6}
                                 required
@@ -139,7 +150,7 @@ const Join_Room = () => {
                             <h4>{txt}</h4>
                         </div>
                         <div className="fields btns">
-                            <button type='submit'>Join Room</button>
+                            <button type='submit' >Join Room</button>
                             <button type='button' onClick={() => { navigate("/") }}>Home</button>
                         </div>
                     </form>

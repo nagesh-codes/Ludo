@@ -4,7 +4,7 @@ export const USERS = {
         roomId: "zxBC0",
         socketID: "socket-123",
         win: false,
-        color:'r'
+        color: 'r'
     }
 }
 
@@ -19,6 +19,7 @@ export const ROOMS = {
         diceValue: null,
         players: [
             { userid: "sx20568P", name: "john", win: false, position: [0, 0], score: 0 }
-        ]
+        ],
+        colors: ['r', 'g', 'b', 'y']
     }
 }

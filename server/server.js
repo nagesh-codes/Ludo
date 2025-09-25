@@ -56,9 +56,10 @@ io.on('connection', (socket) => {
                 turnIndex: 0,
                 diceValue: null,
                 players: [
-                    { userid: userid, name: data.username, position: [0, 0, 0, 0] }
+                    { userid: userid, name: data.username, position: [0, 0, 0, 0], clr: data.clr, disableDice: true }
                 ],
-                player_names
+                player_names,
+                colors: [data.clr]
             }
             console.table(USERS);
             console.table(ROOMS);
@@ -86,9 +87,8 @@ io.on('connection', (socket) => {
                 win: false,
                 color: data.clr
             }
-            ROOMS[data.roomID].players.push({
-                userid, name: data.username, position: [0, 0, 0, 0]
-            });
+            ROOMS[data.roomID].colors.push(data.clr);
+            ROOMS[data.roomID].players.push({ userid, name: data.username, position: [0, 0, 0, 0], clr: data.clr, disableDice: true });
             ROOMS[data.roomID].player_names[ROOMS[data.roomID].player_names.findIndex(x => Number.isNaN(x))] = data.username;
             console.table(ROOMS[data.roomID].players);
             if (!ROOMS[data.roomID].player_names.includes(NaN)) {
@@ -103,14 +103,14 @@ io.on('connection', (socket) => {
         }
     })
 
-    socket.on('GetStatus', (data) => {
+    socket.on('GetPlayersStatus', (data) => {
         try {
             if (!ROOMS[data.roomID]) {
                 io.to(socket.id).emit('GoToHome');
                 return;
             }
             console.log('getStatus is arrived');
-            io.to(socket.id).emit('TakeStatus', { data: ROOMS[data.roomID].player_names, isMatchStarted: ROOMS[data.roomID].isMatchStarted });
+            io.to(socket.id).emit('TakePlayersStatus', { data: ROOMS[data.roomID].player_names, isMatchStarted: ROOMS[data.roomID].isMatchStarted });
         } catch (error) {
             console.log(error.message);
         }
@@ -124,9 +124,9 @@ io.on('connection', (socket) => {
                 let clr = [];
                 if (ROOMS[data.roomID].maxPlayer === 2) {
                     const userColor = USERS[ROOMS[data.roomID].players[0].userid].color;
-                    clr.push(userColor === 'r' ? 'y' : userColor === 'g' ? 'b' : userColor === 'y' ? 'r' : userColor === 'b' ? 'g' : '');
+                    clr.push(userColor === 'red' ? 'yellow' : userColor === 'green' ? 'blue' : userColor === 'yellow' ? 'red' : userColor === 'blue' ? 'green' : '');
                 } else {
-                    clr = ['r', 'g', 'b', 'y'];
+                    clr = ['red', 'green', 'blue', 'yellow'];
                     ROOMS[data.roomID].players.map((id) => {
                         const ind = clr.indexOf(USERS[id.userid].color);
                         clr[ind] = '';
@@ -139,10 +139,39 @@ io.on('connection', (socket) => {
         } catch (error) {
             console.error(error.message);
         }
+    });
+
+    socket.on('GetGameStatus', (data) => {
+        if (!ROOMS[data.roomID]) {
+            io.to(socket.id).emit('GoToHome');
+            return;
+        }
+        // const players_names = {};
+        // ROOMS[data.roomID].players.map((pla) => {
+        //     players_names[pla.color === 'red' ? 'red' : pla.color === 'green' ? 'green' : pla.color === 'yellow' ? 'yellow' : 'blue'] = pla.name;
+        // })
+        io.to(socket.id).emit('TakeGameStatus', {
+            color: ROOMS[data.roomID].color,
+            turnIndex: ROOMS[data.roomID].turnIndex,
+            players_info: ROOMS[data.roomID].players
+        });
+    })
+
+    socket.on('ChangeSocketID', (data) => {
+        try {
+            if (!ROOMS[data.roomID]) {
+                io.to(socket.id).emit('GoToHome');
+                return;
+            }
+            const ind = ROOMS[data.roomID].players.findIndex(p => p.name === data.roomID);
+            USERS[ROOMS[data.roomID].players[ind].userid] = socket.id;
+        } catch (error) {
+            console.error(error.message);
+        }
     })
 
 })
 
 server.listen(port, '0.0.0.0', () => {
-    console.log(`server started on http://localhost:${port}`);
+    console.log(`server started on Port ${port}`);
 })

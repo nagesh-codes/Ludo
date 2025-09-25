@@ -45,6 +45,10 @@ body {
   display: none;
 }
 
+.pointer{
+  cursor: pointer;
+}
+
 #particles-js {
   position: fixed;
   top: 0;

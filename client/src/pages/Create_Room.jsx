@@ -8,12 +8,12 @@ import '../css-files/Create_Room.css'
 const Create_Room = () => {
   const [username, setUsername] = useState('');
   const [maxplayer, setMaxplayer] = useState(2);
-  const [clr, setClr] = useState('r')
+  const [clr, setClr] = useState('red')
   const [roomID, setRoomID] = useState('Generating...');
   const navigate = useNavigate();
   const [showLoader, setShowLoader] = useState(false)
   const { socket, connected } = useSocket();
-  const [colors, setColors] = useState(['r', 'b', 'y', 'g']);
+  const [colors, setColors] = useState(['red', 'blue', 'yellow', 'green']);
 
 
   const handleSubmit = (e) => {
@@ -21,7 +21,7 @@ const Create_Room = () => {
     setShowLoader(true);
     sessionStorage.setItem('username', username);
     sessionStorage.setItem('maxplayer', maxplayer);
-    sessionStorage.setItem('roomid',roomID);
+    sessionStorage.setItem('roomid', roomID);
     socket.emit("CreateNewRoom", { username, roomID, clr, maxplayer });
   }
 
@@ -84,16 +84,12 @@ const Create_Room = () => {
               <div className="player-color">
                 {colors.map((c, i) => {
                   return (
-                    <div 
-                      key={i} 
+                    <div
+                      key={i}
                       onClick={() => { setClr(c) }}
-                      className={`${c === 'r' ? 'red' : c === 'b' ? 'blue' : c === 'g' ? 'green' : 'yellow'} ${clr === c ? 'clr-select' : ''}`}></div>
+                      className={`${c} ${clr === c ? 'clr-select' : ''}`}></div>
                   )
                 })}
-                {/* <div onClick={() => { setClr("r") }} className={`red ${clr === 'r' ? 'clr-select' : ''}`}></div>
-                <div onClick={() => { setClr("b") }} className={`blue ${clr === 'b' ? 'clr-select' : ''}`}></div>
-                <div onClick={() => { setClr("y") }} className={`yellow ${clr === 'y' ? 'clr-select' : ''}`}></div>
-                <div onClick={() => { setClr("g") }} className={`green ${clr === 'g' ? 'clr-select' : ''}`}></div> */}
               </div>
             </div>
             <div className="fields">

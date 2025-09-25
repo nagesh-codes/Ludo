@@ -337,6 +337,12 @@
     box-shadow: inset 0 0 30px #fff;
     display: grid;
     place-items: center;
+    cursor: pointer;
+    z-index: 13;
+}
+
+.game-container .dice-area * {
+    cursor: pointer;
 }
 
 .game-container .red-dice-area {
@@ -353,14 +359,14 @@
     grid-column-end: 14;
 }
 
-.game-container .yellow-dice-area {
+.game-container .blue-dice-area {
     grid-row-start: 12;
     grid-column-start: 3;
     grid-row-end: 14;
     grid-column-end: 5;
 }
 
-.game-container .blue-dice-area {
+.game-container .yellow-dice-area {
     grid-row-start: 12;
     grid-column-start: 12;
     grid-row-end: 14;
@@ -375,7 +381,7 @@
 }
 
 .game-container .star {
-    color: #fff;
+    color: #000000;
     z-index: 4;
 }
 
