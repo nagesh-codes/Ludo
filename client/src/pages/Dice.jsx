@@ -36,15 +36,14 @@ export default function Dice({ number, isDisable = false }) {
     ];
 
     const roll = (newVal) => {
-        // if (rollingRef.current || isDisable) return;
+        if (rollingRef.current) return;
         rollingRef.current = true;
         setValue('…');
         const [bx, by, bz] = faceAngles[newVal];
 
-        // Generate significant, random base rotations for all axes
-        const randomX = Math.floor(Math.random() * 6) + 3; // 3 to 8 full rotations
-        const randomY = Math.floor(Math.random() * 6) + 3; // 3 to 8 full rotations
-        const randomZ = Math.floor(Math.random() * 6) + 3; // 3 to 8 full rotations
+        const randomX = Math.floor(Math.random() * 6) + 3;
+        const randomY = Math.floor(Math.random() * 6) + 3;
+        const randomZ = Math.floor(Math.random() * 6) + 3;
 
         const rx = bx + 360 * randomX;
         const ry = by + 360 * randomY;

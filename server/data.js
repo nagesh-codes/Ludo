@@ -18,7 +18,10 @@ export const ROOMS = {
         winStatus: [],
         diceValue: null,
         players: [
-            { userid: "sx20568P", name: "john", win: false, position: [0, 0], score: 0 }
+            { userid: "D", name: "john", win: false, position: [0, 0], score: 0 },
+            { userid: "A", name: "nagesh", win: false, position: [0, 0], score: 0 },
+            { userid: "C", name: "adf", win: false, position: [0, 0], score: 0 },
+            { userid: "B", name: "fadsf", win: false, position: [0, 0], score: 0 },
         ],
         colors: ['r', 'g', 'b', 'y']
     }

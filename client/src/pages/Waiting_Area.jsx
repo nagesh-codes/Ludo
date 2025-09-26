@@ -16,7 +16,7 @@ const Waiting_Area = () => {
 
   useEffect(() => {
     if (!sessionStorage.getItem('username') || !sessionStorage.getItem('roomid')) {
-      // navigate("/");
+      navigate("/");
     }
 
     for (let i = 0; i < maxplayer - 1; i++) {

@@ -20,7 +20,6 @@ const Home = () => {
                     <div className="rht">
                         <span>How To Play</span>
                         <span><a href="https://nageshdev.online" target='_blank'>About Creator</a></span>
-                        <span><a href="https://github.com/nagesh-codes/Ludo" target='_blank'>GitHub</a></span>
                     </div>
                 </div>
                 <div className="second">

@@ -3,6 +3,8 @@ import Loader from './Loader.jsx'
 import '../css-files/Main_Game.css'
 import Dice from './Dice.jsx';
 import { useSocket } from '../components/socketProvider.jsx';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 const Main_Game = () => {
   const redPath = [
@@ -68,42 +70,86 @@ const Main_Game = () => {
   const [players_info, setPlayers_info] = useState([{ userid: 'asdf', name: "nagesh G", position: [0, 0, 0, 0], clr: 'red', disableDice: true }]);
   const [showLoader, setShowLoader] = useState(false);
   const [diceValue, setDiceValue] = useState(0);
-  const [diceIndex, setDiceIndex] = useState(0);
+  const [diceIndex, setDiceIndex] = useState(3);
   const [diceDisable, setDiceDisable] = useState(false);
   const [roomID, setRoomID] = useState(sessionStorage.getItem('roomid'));
   const [username, setUsername] = useState(sessionStorage.getItem('username'));
+  const [getCurrentPawn, setGetCurrentPawn] = useState('');
+  const [clr, setClr] = useState('');
   const { socket, connected } = useSocket();
+  const navigate = useNavigate();
 
-  const travers = (pawn_clr, ind, end_position, increment = true) => {
-    document.querySelector(`.${pawn_clr}-pawn-${ind}`).style.gridColumnStart = redPath[i][1];
-    document.querySelector(".red-pawn-1").style.gridRowStart = redPath[i][0];
-    i++;
-    if (i < redPath.length) {
+
+  const travers = (pawn_clr, ind, start_position, end_position, increment = true) => {
+    console.log(pawn_clr, ind, start_position, end_position, increment);
+    ++start_position;
+    document.querySelector(`.${pawn_clr}-pawn-${ind}`).style.gridRowStart = pawn_clr === 'red' ? redPath[start_position][0] : pawn_clr === 'green' ? greenPath[start_position][0] : pawn_clr === 'yellow' ? yellowPath[start_position][0] : bluePath[start_position][0]
+    document.querySelector(`.${pawn_clr}-pawn-${ind}`).style.gridColumnStart = pawn_clr === 'red' ? redPath[start_position][1] : pawn_clr === 'green' ? greenPath[start_position][1] : pawn_clr === 'yellow' ? yellowPath[start_position][1] : bluePath[start_position][1]
+    if (start_position <= end_position) {
       setTimeout(() => {
-        travers((pawn_clr, ind, end_position, increment = increment ? true : false));
-      }, 1000)
+        travers(pawn_clr, ind, start_position, end_position, increment = increment ? true : false);
+      }, 300)
     }
+  };
+
+  const setPawns = (players) => {
+    players.forEach((pla) => {
+      pla.position.forEach((pos, ind) => {
+        if (pos !== 0) {
+          document.querySelector(`.${pla.clr}-pawn-${ind + 1}`).style.gridRowStart = pla.clr === 'red' ? redPath[pos][0] : pla.clr === 'green' ? greenPath[pos][0] : pla.clr === 'yellow' ? yellowPath[pos][0] : bluePath[pos][0];
+          document.querySelector(`.${pla.clr}-pawn-${ind + 1}`).style.gridColumnStart = pla.clr === 'red' ? redPath[pos][1] : pla.clr === 'green' ? greenPath[pos][1] : pla.clr === 'yellow' ? yellowPath[pos][1] : bluePath[pos][1];
+        }
+      })
+    })
   }
 
   useEffect(() => {
     console.log("diceValue =", diceValue);
+    if (!socket || !connected || diceDisable) return;
+    socket.emit('DiceRolled', { roomID, username, diceValue });
+    let arr = document.querySelectorAll(`.${clr}-pawn`);
+    arr.forEach((r)=>{
+      r.classList.add('add-anime')
+    })
   }, [diceValue]);
 
-  // useEffect(() => {
-  //   const timer = setTimeout(() => setShowLoader(false), 1000);
-  //   return () => clearTimeout(timer);
-  // }, []);
+
+
+  useEffect(() => {
+    console.log(getCurrentPawn)
+  }, [getCurrentPawn]);
 
   useEffect(() => {
     if (!socket || !connected) return;
     socket.emit('GetGameStatus', { roomID, username });
+    socket.emit('ChangeSocketID', { roomID, username });
+    socket.on('GoToHome', () => {
+      toast.error('First Create or Join The Game Room !');
+      navigate("/");
+    })
 
     socket.on('TakeGameStatus', (data) => {
       setPlayers_info(data.players_info);
+      setDiceIndex(data.turnIndex);
+      data.players_info.forEach((pla) => {
+        if (pla.name === username) {
+          setDiceDisable(pla.disableDice);
+          setClr(pla.clr)
+        }
+      });
+      // setPawns(data.players_info);
     });
+
+    socket.on('DiceRolled', (data) => {
+      console.log('dice arrives')
+      console.log(data.data.diceValue);
+      setDiceValue(data.data.diceValue);
+    })
 
     return () => {
       socket.off('TakeGameStatus');
+      socket.off('DiceRolled');
+      socket.off('GoToHome');
     }
   }, [socket, connected]);
 
@@ -116,7 +162,7 @@ const Main_Game = () => {
           <div className="left">
             <div className="board">
               {addDivs()}
-              {addPlayersInfo(diceValue, setDiceValue, diceIndex, diceDisable, players_info)}
+              {addPlayersInfo(diceValue, setDiceValue, diceIndex, diceDisable, players_info,setGetCurrentPawn)}
             </div>
             <button className="leave-btn">Leave The Game</button>
           </div>
@@ -281,18 +327,18 @@ function addDivs() {
   return divs;
 }
 
-function addPlayersInfo(diceValue, setDiceValue, diceIndex, diceDisable, players_info) {
+function addPlayersInfo(diceValue, setDiceValue, diceIndex, diceDisable, players_info,setGetCurrentPawn) {
   const divs = [];
   const colors = ['red', 'green', 'yellow', 'blue'];
   players_info.forEach((user, ind) => {
     for (let j = 0; j < 4; j++) {
       divs.push(
-        <div key={`${user.clr} + ${j}`} className={`${user.clr}-pawn ${user.clr}-pawn-${j + 1} pawns pointer`}></div>
+        <div key={`${user.clr} + ${j}`} className={`${user.clr}-pawn ${user.clr}-pawn-${j + 1} pawns`} onClick={e => setGetCurrentPawn(e)}></div>
       )
     };
 
     divs.push(
-      <div key={user.clr} className={`${user.clr}-dice-area dice-area`} onClick={() => { setDiceValue(Math.floor(Math.random() * 6) + 1) }}>
+      <div key={user.clr} className={`${user.clr}-dice-area dice-area`} onClick={() => { diceDisable ? '' : setDiceValue(Math.floor(Math.random() * 6) + 1) }}>
         {diceIndex === ind ? <Dice number={diceValue} isDisable={diceDisable} /> : ''}
       </div>
     );

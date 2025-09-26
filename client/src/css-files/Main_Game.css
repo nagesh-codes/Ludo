@@ -189,7 +189,7 @@
     border: 2px solid #fff;
     aspect-ratio: 1;
     rotate: -45deg;
-    z-index: 12;
+    z-index: 13;
     transform: translateY(-30%) translateX(30%);
 }
 
@@ -229,7 +229,6 @@
 .game-container .red-pawn-1 {
     grid-row-start: 3;
     grid-column-start: 2;
-    animation: animate 0.5s infinite linear;
 }
 
 .game-container .red-pawn-2 {
@@ -337,13 +336,13 @@
     box-shadow: inset 0 0 30px #fff;
     display: grid;
     place-items: center;
-    cursor: pointer;
+    /* cursor: pointer; */
     z-index: 13;
 }
 
-.game-container .dice-area * {
+/* .game-container .dice-area * {
     cursor: pointer;
-}
+} */
 
 .game-container .red-dice-area {
     grid-row-start: 3;
@@ -394,7 +393,10 @@
 
 
 
-
+.add-anime {
+    animation: animate 0.5s infinite linear;
+    cursor: pointer;
+}
 
 
 

@@ -18,3 +18,10 @@ export const generateRandomID = () => {
     console.log(er.message);
   }
 }
+
+export const sortUsers = (data) => {
+  if (ROOMS[data.roomID].players.length !== 2) {
+    ROOMS[data.roomID].players.sort((a, b) => (a.unique_id).localeCompare(b.unique_id))
+  }
+  ROOMS[data.roomID].players[0].disableDice = false;
+}
