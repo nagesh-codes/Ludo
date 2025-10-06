@@ -13,13 +13,6 @@ import './css-files/all-keyframes.css'
 import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
-  useEffect(() => {
-    window.particlesJS.load(
-      "particles-js",
-      "/particles.json",
-    );
-  }, []);
-
   return (
     <>
       {/* <div id="particles-js"></div> */}

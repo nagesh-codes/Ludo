@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import Loader from './Loader.jsx'
-import '../css-files/Main_Game.css'
 import Dice from './Dice.jsx';
 import { useSocket } from '../components/socketProvider.jsx';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import '../css-files/Main_Game.css'
 
 const Main_Game = () => {
   const redPath = [
@@ -80,15 +80,29 @@ const Main_Game = () => {
   const navigate = useNavigate();
 
 
+  const checkDivs = async () => {
+    let divs = document.querySelectorAll("div");
+
+    while (Boolean(!document.querySelector(".last-div"))) {
+      console.log(`Currently found ${divs.length} divs, waiting...`);
+    //   await new Promise((resolve) => setTimeout(resolve, 400));
+    //   divs = document.querySelectorAll("div");
+    }
+
+    console.log(`✅ All divs rendered: ${divs.length}`);
+  };
+
   const travers = (pawn_clr, ind, start_position, end_position, increment = true) => {
-    console.log(pawn_clr, ind, start_position, end_position, increment);
+    document.querySelectorAll(`.${pawn_clr}-pawn`).forEach((pa) => {
+      pa.classList.remove('add-anime');
+    });
     ++start_position;
     document.querySelector(`.${pawn_clr}-pawn-${ind}`).style.gridRowStart = pawn_clr === 'red' ? redPath[start_position][0] : pawn_clr === 'green' ? greenPath[start_position][0] : pawn_clr === 'yellow' ? yellowPath[start_position][0] : bluePath[start_position][0]
     document.querySelector(`.${pawn_clr}-pawn-${ind}`).style.gridColumnStart = pawn_clr === 'red' ? redPath[start_position][1] : pawn_clr === 'green' ? greenPath[start_position][1] : pawn_clr === 'yellow' ? yellowPath[start_position][1] : bluePath[start_position][1]
     if (start_position <= end_position) {
       setTimeout(() => {
         travers(pawn_clr, ind, start_position, end_position, increment = increment ? true : false);
-      }, 300)
+      }, 100)
     }
   };
 
@@ -108,15 +122,26 @@ const Main_Game = () => {
     if (!socket || !connected || diceDisable) return;
     socket.emit('DiceRolled', { roomID, username, diceValue });
     let arr = document.querySelectorAll(`.${clr}-pawn`);
-    arr.forEach((r)=>{
+    arr.forEach((r) => {
       r.classList.add('add-anime')
-    })
+    });
+    setDiceDisable(true);
   }, [diceValue]);
 
-
+  useEffect(() => {
+    console.log('doned')
+    checkDivs();
+    const divs = document.querySelectorAll('div');
+    console.log(`Total divs rendered: ${divs.length}`);
+  }, []);
 
   useEffect(() => {
-    console.log(getCurrentPawn)
+    if (diceDisable || !document.querySelector(".player-info")) return;
+    setTimeout(() => { 
+      const ind = Number(getCurrentPawn.target.classList[1].split("-")[2]);
+      const start_position = players_info[players_info.findIndex((p) => p.clr === clr)].position[ind - 1];
+      travers(clr, ind, start_position, 50, true);
+    }, 3000);
   }, [getCurrentPawn]);
 
   useEffect(() => {
@@ -137,7 +162,7 @@ const Main_Game = () => {
           setClr(pla.clr)
         }
       });
-      // setPawns(data.players_info);
+      setPawns(data.players_info);
     });
 
     socket.on('DiceRolled', (data) => {
@@ -156,13 +181,13 @@ const Main_Game = () => {
   return (
     <div className='game-container'>
       {showLoader ? <Loader txt="designing the game area." /> : ''}
-      <div className={`${showLoader ? 'hide' : 'wrapper'}`}>
-        <div className="main-heading">Ludo Made By Nagesh</div>
+      <div className={`${showLoader ? 'hide' : 'wrapper '}`}>
+        {/* <div className="main-heading">Ludo Made By Nagesh</div> */}
         <div className="middle">
           <div className="left">
             <div className="board">
               {addDivs()}
-              {addPlayersInfo(diceValue, setDiceValue, diceIndex, diceDisable, players_info,setGetCurrentPawn)}
+              {addPlayersInfo(diceValue, setDiceValue, diceIndex, diceDisable, players_info, setGetCurrentPawn)}
             </div>
             <button className="leave-btn">Leave The Game</button>
           </div>
@@ -174,110 +199,6 @@ const Main_Game = () => {
                   <p>hello akjsdhf ajsd fhalksjd fhalsdjf halskjd fhalskdjf halskdjf hlsakjd fhalsjdf h 💕</p>
                 </div>
 
-                <div className="rght-txt">
-                  <h3>you</h3>
-                  <p>hello akjsdhf ajsd fhalksjd fhalsdjf halskjd fhalskdjf halskdjf hlsakjd fhalsjdf h</p>
-                </div>
-                <div className="rght-txt">
-                  <h3>you</h3>
-                  <p>hello akjsdhf ajsd fhalksjd fhalsdjf halskjd fhalskdjf halskdjf hlsakjd fhalsjdf h</p>
-                </div>
-
-                <div className="lft-txt">
-                  <h3>Nagesh</h3>
-                  <p>hello akjsdhf ajsd fhalksjd fhalsdjf halskjd fhalskdjf halskdjf hlsakjd fhalsjdf h</p>
-                </div>
-                <div className="rght-txt">
-                  <h3>you</h3>
-                  <p>hello akjsdhf ajsd fhalksjd fhalsdjf halskjd fhalskdjf halskdjf hlsakjd fhalsjdf h</p>
-                </div>
-
-
-                <div className="lft-txt">
-                  <h3>Nagesh</h3>
-                  <p>hello akjsdhf ajsd fhalksjd fhalsdjf halskjd fhalskdjf halskdjf hlsakjd fhalsjdf h</p>
-                </div>
-                <div className="rght-txt">
-                  <h3>you</h3>
-                  <p>hello akjsdhf ajsd fhalksjd fhalsdjf halskjd fhalskdjf halskdjf hlsakjd fhalsjdf h</p>
-                </div>
-
-                <div className="lft-txt">
-                  <h3>Nagesh</h3>
-                  <p>hello akjsdhf ajsd fhalksjd fhalsdjf halskjd fhalskdjf halskdjf hlsakjd fhalsjdf h</p>
-                </div>
-                <div className="rght-txt">
-                  <h3>you</h3>
-                  <p>hello akjsdhf ajsd fhalksjd fhalsdjf halskjd fhalskdjf halskdjf hlsakjd fhalsjdf h</p>
-                </div>
-
-                <div className="lft-txt">
-                  <h3>Nagesh</h3>
-                  <p>hello akjsdhf ajsd fhalksjd fhalsdjf halskjd fhalskdjf halskdjf hlsakjd fhalsjdf h</p>
-                </div>
-                <div className="rght-txt">
-                  <h3>you</h3>
-                  <p>hello akjsdhf ajsd fhalksjd fhalsdjf halskjd fhalskdjf halskdjf hlsakjd fhalsjdf h</p>
-                </div>
-
-                <div className="lft-txt">
-                  <h3>Nagesh</h3>
-                  <p>hello akjsdhf ajsd fhalksjd fhalsdjf halskjd fhalskdjf halskdjf hlsakjd fhalsjdf h</p>
-                </div>
-                <div className="rght-txt">
-                  <h3>you</h3>
-                  <p>hello akjsdhf ajsd fhalksjd fhalsdjf halskjd fhalskdjf halskdjf hlsakjd fhalsjdf h</p>
-                </div>
-
-                <div className="lft-txt">
-                  <h3>Nagesh</h3>
-                  <p>hello akjsdhf ajsd fhalksjd fhalsdjf halskjd fhalskdjf halskdjf hlsakjd fhalsjdf h</p>
-                </div>
-                <div className="rght-txt">
-                  <h3>you</h3>
-                  <p>hello akjsdhf ajsd fhalksjd fhalsdjf halskjd fhalskdjf halskdjf hlsakjd fhalsjdf h</p>
-                </div>
-
-                <div className="lft-txt">
-                  <h3>Nagesh</h3>
-                  <p>hello akjsdhf ajsd fhalksjd fhalsdjf halskjd fhalskdjf halskdjf hlsakjd fhalsjdf h</p>
-                </div>
-                <div className="rght-txt">
-                  <h3>you</h3>
-                  <p>hello akjsdhf ajsd fhalksjd fhalsdjf halskjd fhalskdjf halskdjf hlsakjd fhalsjdf h</p>
-                </div>
-
-                <div className="lft-txt">
-                  <h3>Nagesh</h3>
-                  <p>hello akjsdhf ajsd fhalksjd fhalsdjf halskjd fhalskdjf halskdjf hlsakjd fhalsjdf h</p>
-                </div>
-                <div className="rght-txt">
-                  <h3>you</h3>
-                  <p>hello akjsdhf ajsd fhalksjd fhalsdjf halskjd fhalskdjf halskdjf hlsakjd fhalsjdf h</p>
-                </div>
-
-                <div className="lft-txt">
-                  <h3>Nagesh</h3>
-                  <p>hello akjsdhf ajsd fhalksjd fhalsdjf halskjd fhalskdjf halskdjf hlsakjd fhalsjdf h</p>
-                </div>
-                <div className="rght-txt">
-                  <h3>you</h3>
-                  <p>hello akjsdhf ajsd fhalksjd fhalsdjf halskjd fhalskdjf halskdjf hlsakjd fhalsjdf h</p>
-                </div>
-
-                <div className="lft-txt">
-                  <h3>Nagesh</h3>
-                  <p>hello akjsdhf ajsd fhalksjd fhalsdjf halskjd fhalskdjf halskdjf hlsakjd fhalsjdf h</p>
-                </div>
-                <div className="rght-txt">
-                  <h3>you</h3>
-                  <p>hello akjsdhf ajsd fhalksjd fhalsdjf halskjd fhalskdjf halskdjf hlsakjd fhalsjdf h</p>
-                </div>
-
-                <div className="lft-txt">
-                  <h3>Nagesh</h3>
-                  <p>hello akjsdhf ajsd fhalksjd fhalsdjf halskjd fhalskdjf halskdjf hlsakjd fhalsjdf h</p>
-                </div>
                 <div className="rght-txt">
                   <h3>you</h3>
                   <p>hello akjsdhf ajsd fhalksjd fhalsdjf halskjd fhalskdjf halskdjf hlsakjd fhalsjdf h</p>
@@ -294,6 +215,7 @@ const Main_Game = () => {
           </div>
         </div>
       </div>
+      <div className="last-div hidden"></div>
     </div>
   )
 }
@@ -327,7 +249,7 @@ function addDivs() {
   return divs;
 }
 
-function addPlayersInfo(diceValue, setDiceValue, diceIndex, diceDisable, players_info,setGetCurrentPawn) {
+function addPlayersInfo(diceValue, setDiceValue, diceIndex, diceDisable, players_info, setGetCurrentPawn) {
   const divs = [];
   const colors = ['red', 'green', 'yellow', 'blue'];
   players_info.forEach((user, ind) => {
@@ -367,5 +289,4 @@ function addPlayersInfo(diceValue, setDiceValue, diceIndex, diceDisable, players
 
   return divs;
 }
-
 export default Main_Game
